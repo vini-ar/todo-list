@@ -6,7 +6,13 @@
     margin: 0
 }
 
+html {
+  font-size: 1rem;
+}
+
 body {
+    font-family: 'Inter', sans-serif;
+    color: #333;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
 
@@ -47,11 +53,6 @@ h1, h2, h3, h4, h5, h6 {
     grid-area: content;
   }
 
-  li {
-    list-style-type: none
-  }
-
-
   .container {
     height: 100vh;
     display: grid;
@@ -60,4 +61,34 @@ h1, h2, h3, h4, h5, h6 {
     grid-template-areas:
     "sidebar content content content";
     padding: 2rem
+  }
+
+  ul.task-item {
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0.5rem;
+  }
+  ul.task-item:first-child {
+    border: 1px solid black;
+    border-width: 1px 0px 1px 0px;
+  }
+
+  ul.task-item:not(:first-child) {
+    border: 1px solid black;
+    border-width: 0px 0px 1px 0px;
+  }
+
+  ul.task-item > button {
+    width: 100%;
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit; 
+    display: flex;
+    flex-direction: row;
+    
   }
