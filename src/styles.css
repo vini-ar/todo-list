@@ -1,3 +1,11 @@
+:root {
+  --main-black: #333;
+  --main-gray-strong: #AEB3AC;
+  --main-gray-light: #F4F4F4;
+  --main-white: #FAFAFA;
+  --main-yellow: #ACB8A8;
+}
+
 *, *::after, *::before {
     box-sizing: border-box;
 }
@@ -12,7 +20,7 @@ html {
 
 body {
     font-family: 'Inter', sans-serif;
-    color: #333;
+    color: var(--main-black);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
 
@@ -44,12 +52,11 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .sidebar {
-    background-color: aqua;
     grid-area: sidebar;
+    border-radius: 10px;
   }
 
   .content {
-    background-color: yellow;
     grid-area: content;
   }
 
@@ -60,24 +67,33 @@ h1, h2, h3, h4, h5, h6 {
     grid-template-rows: auto;
     grid-template-areas:
     "sidebar content content content";
-    padding: 2rem
+    padding: 2rem;
+  }
+
+  li {
+    list-style-type: none;
   }
 
   ul.task-item {
-    width: 100%;
-    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
     margin: 0;
     padding: 0.5rem;
   }
   ul.task-item:first-child {
-    border: 1px solid black;
+    border: 1px solid var(--main-black);
     border-width: 1px 0px 1px 0px;
   }
 
   ul.task-item:not(:first-child) {
-    border: 1px solid black;
+    border: 1px solid ;
     border-width: 0px 0px 1px 0px;
   }
+
+.task-item-add-btn {
+  color: var(--main-gray-strong);
+}
 
   ul.task-item > button {
     width: 100%;
@@ -90,5 +106,4 @@ h1, h2, h3, h4, h5, h6 {
     outline: inherit; 
     display: flex;
     flex-direction: row;
-    
   }
