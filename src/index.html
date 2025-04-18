@@ -20,16 +20,51 @@
             </div>
         </div>
         <div class="content">
-            <div class="content-title">
-                <h1>Default</h1>
-                <li class="task-list">       
-                    <ul class="task-item task-item-add-btn">
-                        <button class="add-task-btn">
-                            <i data-lucide="plus"></i>
-                            <span class="task-name">Add New Task</span>
-                        </button>
-                    </ul>          
-                </li>
+            <div class="content__title">
+                <h1>Inbox</h1>
+            </div>             
+            <div class="task-add">
+                <div class="task-add__button-container">
+                    <button class="task-add-btn">
+                        <i data-lucide="plus"></i>
+                        <span class="task-name">Add New Task</span>
+                    </button>
+                </div>
+                <div class="task-add__form-container">
+                    <form class="task-add__form">
+                        <label for="task-name-input">
+                            <input 
+                                type="text" 
+                                name="task-name" 
+                                id="task-name-input"
+                                class="task-add__input task-add__input--name" 
+                                placeholder="Task Name">
+                        </label>
+                        <label for="task-description-input">
+                            <input 
+                                type="text" 
+                                name="task-description" 
+                                id="task-description-input"
+                                class="task-add__input task-add__input--description"
+                                placeholder="Task Description">
+                        </label>
+                        <label for="task-date-input">
+                            <input 
+                                type="date" 
+                                name="task-date"
+                                id="task-date-input"
+                                class="task-add__input task-add__input--date" 
+                                placeholder="">
+                        </label>
+                    </form>
+                    <div class="task-add__controlls">
+                        <select class="task-add__select">
+                            <option value="inbox">Inbox</option>
+                        </select>
+                        <button class="task-add__cancel" type="button">Cancel</button>
+                        <button class="task-add__add-submit" type="submit">Add Task</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

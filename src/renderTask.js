@@ -13,7 +13,6 @@ export function renderTask(Task) {
         if (!userTaskName) {
             taskName.textContent = "Hello"
         }
-
     })
     const taskDate = elementFactory('input', '', {class: 'task-date', type: 'date', value: Task.deadline} )
 

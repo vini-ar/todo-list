@@ -4,6 +4,7 @@
   --main-gray-light: #F4F4F4;
   --main-white: #FAFAFA;
   --main-yellow: #ACB8A8;
+  --main-red: #DC4C3E;
 }
 
 *, *::after, *::before {
@@ -81,21 +82,35 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0.5rem;
   }
-  ul.task-item:first-child {
+  .container-task-add-btn {
     border: 1px solid var(--main-black);
     border-width: 1px 0px 1px 0px;
   }
 
-  ul.task-item:not(:first-child) {
+  ul.task-item {
     border: 1px solid ;
     border-width: 0px 0px 1px 0px;
   }
 
-.task-item-add-btn {
-  color: var(--main-gray-strong);
-}
 
-  ul.task-item > button {
+.container-task-add-btn {
+    width: 100%;
+    background: none;
+    color: var(--main-gray-strong);
+    border: none;
+    padding: 0.5rem 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit; 
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid var(--main-gray-strong)
+  }
+
+  .container-task-add-btn:hover {
+    color: var(--main-red)
+  }
+  .task-add-btn {
     width: 100%;
     background: none;
     color: inherit;
@@ -106,4 +121,14 @@ h1, h2, h3, h4, h5, h6 {
     outline: inherit; 
     display: flex;
     flex-direction: row;
+  }
+
+  .hide {
+    display: none;
+  }
+  
+  .task-add__form-container {
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: 1rem
   }

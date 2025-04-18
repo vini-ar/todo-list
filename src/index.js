@@ -5,26 +5,28 @@ import { projectFactory } from './projectFactory'
 import { renderTask } from './renderTask';
 import { taskFactory } from  './taskFactory' 
 import { loadTasks } from './loadTasks';
+import { renderAddTaskContainer } from './renderAddTaskContainer';
+import { hideButton } from './hideButton';
 
 createIcons({ icons });
-let counter = 0;
+let inbox = []
+
 
 const taskList = document.querySelector('.task-list')
-const addTaskButton = document.querySelector('.add-task-btn')
+const addTaskButton = document.querySelector('.task-add-btn')
 addTaskButton.addEventListener('click', () => {
+    hideButton()
+    renderAddTaskContainer()
+    /*
     const Task = taskFactory()
     const ul = renderTask(Task)
     taskList.append(ul)
+    inbox.push(Task)
+    */
 })
 
 
-let defaultProject = [
-    taskFactory('0', 'Comer Cachorro', '2025-04-04'), 
-    taskFactory('0', 'Comer Dog', '2025-04-04'), 
-    taskFactory('0', 'Cavalgar no Animal Kingdom', '2025-04-04')
-]
-
-document.addEventListener('DOMContentLoaded', () => loadTasks(defaultProject))
+document.addEventListener('DOMContentLoaded', () => loadTasks(inbox))
 
 
 
