@@ -5,18 +5,15 @@ import { projectFactory } from './projectFactory'
 import { renderTask } from './renderTask';
 import { taskFactory } from  './taskFactory' 
 import { loadTasks } from './loadTasks';
-import { renderAddTaskContainer } from './renderAddTaskContainer';
+import {displayAddTaskContainer } from './displayAddTaskContainer'
 import { hideButton } from './hideButton';
 
 createIcons({ icons });
 let inbox = []
 
-
-const taskList = document.querySelector('.task-list')
-const addTaskButton = document.querySelector('.task-add-btn')
+const addTaskButton = document.querySelector('.task-add__button')
 addTaskButton.addEventListener('click', () => {
-    hideButton()
-    renderAddTaskContainer()
+    displayAddTaskContainer()
     /*
     const Task = taskFactory()
     const ul = renderTask(Task)
@@ -25,6 +22,18 @@ addTaskButton.addEventListener('click', () => {
     */
 })
 
+const taskDateInput = document.getElementById("task-date-input")
+taskDateInput.value = format(new Date(), "yyyy-MM-dd")
+
+const taskAddCancelButton = document.querySelector(".task-add__cancel")
+taskAddCancelButton.addEventListener("click", () => {
+    const taskAddFormContainer = document.querySelector(".task-add__form-container")
+    const button = document.querySelector(".task-add__button")
+
+    button.classList.remove("hide")
+    taskAddFormContainer.classList.add("hide")
+    
+})
 
 document.addEventListener('DOMContentLoaded', () => loadTasks(inbox))
 

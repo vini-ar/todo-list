@@ -110,7 +110,7 @@ h1, h2, h3, h4, h5, h6 {
   .container-task-add-btn:hover {
     color: var(--main-red)
   }
-  .task-add-btn {
+  .task-add__button {
     width: 100%;
     background: none;
     color: inherit;
@@ -130,5 +130,41 @@ h1, h2, h3, h4, h5, h6 {
   .task-add__form-container {
     border: 1px solid black;
     border-radius: 1rem;
-    padding: 1rem
+    padding: 0.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 10rem;
   }
+
+  .task-add__form {
+    display: flex;
+    height: 80%;
+    flex-direction: column;
+    justify-content: space-evenly;
+    
+  }
+  .task-add__input {
+    border: 0;
+  }
+  .task-add__input--name, .task-add__input--description {
+    width: 100%;
+  }
+  
+  .task-add__input--name {
+    font-weight: bold;
+  }
+
+  .task-add__controlls {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+  .task-add__select {
+    margin-right: auto;
+  }
+
+  .hide {
+    display: none;
+  }
+
+

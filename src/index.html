@@ -22,15 +22,19 @@
         <div class="content">
             <div class="content__title">
                 <h1>Inbox</h1>
+            </div>
+            <div class="task-list__container">
+                <li class="task-list">
+                </li>
             </div>             
             <div class="task-add">
                 <div class="task-add__button-container">
-                    <button class="task-add-btn">
+                    <button class="task-add__button">
                         <i data-lucide="plus"></i>
                         <span class="task-name">Add New Task</span>
                     </button>
                 </div>
-                <div class="task-add__form-container">
+                <div class="task-add__form-container hide">
                     <form class="task-add__form">
                         <label for="task-name-input">
                             <input 
@@ -62,10 +66,9 @@
                             <option value="inbox">Inbox</option>
                         </select>
                         <button class="task-add__cancel" type="button">Cancel</button>
-                        <button class="task-add__add-submit" type="submit">Add Task</button>
+                        <button class="task-add__submit" type="submit">Add Task</button>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
     
