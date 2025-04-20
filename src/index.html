@@ -29,17 +29,17 @@
             </div>             
             <div class="task-add">
                 <div class="task-add__button-container">
-                    <button class="task-add__button">
+                    <button class="task-add__display-button">
                         <i data-lucide="plus"></i>
                         <span class="task-name">Add New Task</span>
                     </button>
                 </div>
                 <div class="task-add__form-container hide">
-                    <form class="task-add__form">
+                    <form class="task-add__form" id="task-add-form">
                         <label for="task-name-input">
                             <input 
                                 type="text" 
-                                name="task-name" 
+                                name="taskName" 
                                 id="task-name-input"
                                 class="task-add__input task-add__input--name" 
                                 placeholder="Task Name">
@@ -47,7 +47,7 @@
                         <label for="task-description-input">
                             <input 
                                 type="text" 
-                                name="task-description" 
+                                name="taskDescription" 
                                 id="task-description-input"
                                 class="task-add__input task-add__input--description"
                                 placeholder="Task Description">
@@ -55,18 +55,23 @@
                         <label for="task-date-input">
                             <input 
                                 type="date" 
-                                name="task-date"
+                                name="taskDate"
                                 id="task-date-input"
                                 class="task-add__input task-add__input--date" 
                                 placeholder="">
                         </label>
+                        <label for="task-add__project-select">
+                            <select 
+                                id="task-add__project-select" 
+                                class="task-add__select" 
+                                name="taskProject">
+                                <option value="inbox" selected>Inbox</option>
+                            </select>
+                        </label>
                     </form>
                     <div class="task-add__controlls">
-                        <select class="task-add__select">
-                            <option value="inbox">Inbox</option>
-                        </select>
                         <button class="task-add__cancel" type="button">Cancel</button>
-                        <button class="task-add__submit" type="submit">Add Task</button>
+                        <button class="task-add__submit" type="submit" form="task-add-form">Add Task</button>
                     </div>
                 </div>
         </div>
