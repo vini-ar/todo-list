@@ -20,13 +20,31 @@
             </div>
         </div>
         <div class="content">
-            <div class="content__title">
-                <h1>Inbox</h1>
+            <div class="header">
+                <h1 class="header__project-name">Inbox</h1>
             </div>
-            <div class="task-list__container">
-                <li class="task-list">
-                </li>
-            </div>             
+            <div class="task-list">
+                <div class="task-list__item">
+                    <div class="task-list__checkbox-wrapper">
+                        <input class="task-list__checkbox-input" type="checkbox">
+                    </div>
+                    <div class="task-list__info">
+                            <span class="task-list__name">Comer Comida Azul</span>
+                            <span class="task-list__description">Encontrar Comida no Cavalo</span>
+                            <input class="task-list__date" type="date" value="">
+                    </div>
+                </div>
+                <div class="task-list__item">
+                    <div class="task-list__checkbox-wrapper">
+                        <input class="task-list__checkbox-input" type="checkbox">
+                    </div>
+                    <div class="task-list__info">
+                            <span class="task-list__name">Comer Comida Azul</span>
+                            <span class="task-list__description">Encontrar Comida no Cavalo</span>
+                            <input class="task-list__date" type="date" value="">
+                    </div>
+                </div>   
+            </div>  
             <div class="task-add">
                 <div class="task-add__button-container">
                     <button class="task-add__display-button">
@@ -74,8 +92,8 @@
                         <button class="task-add__submit" type="submit" form="task-add-form">Add Task</button>
                     </div>
                 </div>
+            </div>
         </div>
-    </div>
     
 </body>
 </html>

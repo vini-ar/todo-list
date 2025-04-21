@@ -1,6 +1,6 @@
 :root {
-  --main-black: #333;
-  --main-gray-strong: #AEB3AC;
+  --main-black: #000000;
+  --main-gray-strong: #A8A8A8;
   --main-gray-light: #F4F4F4;
   --main-white: #FAFAFA;
   --main-yellow: #ACB8A8;
@@ -52,6 +52,10 @@ h1, h2, h3, h4, h5, h6 {
     isolation: isolate;
   }
 
+  .hide {
+    display: none;
+  }
+
   .sidebar {
     grid-area: sidebar;
     border-radius: 10px;
@@ -64,68 +68,22 @@ h1, h2, h3, h4, h5, h6 {
   .container {
     height: 100vh;
     display: grid;
-    grid-template-columns: repeat(1fr, 4);
+    grid-template-columns: 320px 1fr 1fr 1fr;
     grid-template-rows: auto;
     grid-template-areas:
     "sidebar content content content";
     padding: 2rem;
   }
 
-  li {
-    list-style-type: none;
+  .header__project-name {
+    padding: 1rem;
   }
 
-  ul.task-item {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    margin: 0;
-    padding: 0.5rem;
-  }
   .container-task-add-btn {
     border: 1px solid var(--main-black);
     border-width: 1px 0px 1px 0px;
   }
 
-  ul.task-item {
-    border: 1px solid ;
-    border-width: 0px 0px 1px 0px;
-  }
-
-
-.container-task-add-btn {
-    width: 100%;
-    background: none;
-    color: var(--main-gray-strong);
-    border: none;
-    padding: 0.5rem 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit; 
-    display: flex;
-    flex-direction: row;
-    border-top: 1px solid var(--main-gray-strong)
-  }
-
-  .container-task-add-btn:hover {
-    color: var(--main-red)
-  }
-  .task-add__button {
-    width: 100%;
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit; 
-    display: flex;
-    flex-direction: row;
-  }
-
-  .hide {
-    display: none;
-  }
   
   .task-add__form-container {
     border: 1px solid black;
@@ -167,4 +125,50 @@ h1, h2, h3, h4, h5, h6 {
     display: none;
   }
 
+.task-list__item {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--main-gray-strong);
+}
+.task-list__checkbox-input {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--main-red);
+  border-radius: 1rem;
+  cursor: pointer;
+  position: relative;
+  background-color: white;
+}
 
+.task-list__checkbox-input::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  display: none;
+}
+
+.task-list__checkbox-input:checked {
+  background-color: var(--main-red);
+}
+
+.task-list__checkbox-input:checked::after {
+  display: block;
+}
+.task-list__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.task-list__description {
+  font-size: 0.75rem;
+  color: var(--main-gray-strong);
+}
