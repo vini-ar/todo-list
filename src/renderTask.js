@@ -2,22 +2,56 @@ import { elementFactory } from './elementFactory';
 
 
 export function renderTask(Task) {
-    const ul = elementFactory('ul', '', {class: "task-item"})
-    const btn = elementFactory('button', '', {class: 'task-btn'})
-    const checkbox = elementFactory('input', '', {type: 'checkbox', id: `task-${Task.id}`, for: `task-${Task.id}`})
-    const taskName = elementFactory('span', Task.name, {class: "task-name"} )
+    const taskListInfo = document.querySelector(".task-list__info")
+    const taskList = document.querySelector(".task-list")
+    
+    const divContainer = elementFactory(
+        "div", 
+        "", 
+        { class: "task-list__item" }
+    );
+    
+    const divCheckboxWrapper = elementFactory(
+        "div", 
+        "", 
+        { class: "task-list__checkbox-wrapper" }
+    );
 
-    taskName.addEventListener('click', () => {
-        let userTaskName = prompt("Enter Your Task Name")
-        taskName.textContent = userTaskName
-        if (!userTaskName) {
-            taskName.textContent = "Hello"
-        }
-    })
-    const taskDate = elementFactory('input', '', {class: 'task-date', type: 'date', value: Task.deadline} )
+    const checkbox = elementFactory(
+        "input", 
+        "", 
+        { class: "task-list__checkbox-input", type: "checkbox"} 
+    );
 
-    btn.append(taskName, taskDate)
-    ul.append(checkbox, btn)
+    const divTaskWrapper = elementFactory(
+        "div",
+        "",
+        { class: "task-list__info" }
+    );
 
-    return ul
+    const spanTaskName = elementFactory(
+        "span",
+        Task.name,
+        { class: "task-list__name" }
+    );
+
+    const spanTaskDescription = elementFactory(
+        "span",
+        Task.description,
+        { class: "task-list__description" }  
+    );
+
+    const inputTaskDate = elementFactory(
+        "input",
+        "",
+        { class: "task-list_-date", type: "date", value: Task.deadline }
+
+    );
+
+    divCheckboxWrapper.append(checkbox)
+    divTaskWrapper.append(spanTaskName, spanTaskDescription, inputTaskDate)
+
+    divContainer.append(divCheckboxWrapper, divTaskWrapper)
+
+    taskList.append(divContainer)
 }

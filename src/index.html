@@ -8,51 +8,28 @@
 <body>
     <div class="container">
         <div class="sidebar">
-            <div class="sidebar-title">
-                <h2>Menu</h2>
-            </div>
-            <div class="sidebar-projects">
-                <h2>Projects</h1>                    
-                <li>
-                    <ul>Default</ul>
-                    <ul>Create a New Project</ul>
-                </li>
+            <div class="controlls">
+                <div class="controlls__add-task">
+                    <i class="controlls__Add-task-icon"></i>
+                    <span class="controlls__add-task-label">Add Task</span>
+                </div>
             </div>
         </div>
         <div class="content">
             <div class="header">
-                <h1 class="header__project-name">Inbox</h1>
+                <h1 class="task-list__project-name">Inbox</h1>
             </div>
-            <div class="task-list">
-                <div class="task-list__item">
-                    <div class="task-list__checkbox-wrapper">
-                        <input class="task-list__checkbox-input" type="checkbox">
-                    </div>
-                    <div class="task-list__info">
-                            <span class="task-list__name">Comer Comida Azul</span>
-                            <span class="task-list__description">Encontrar Comida no Cavalo</span>
-                            <input class="task-list__date" type="date" value="">
-                    </div>
-                </div>
-                <div class="task-list__item">
-                    <div class="task-list__checkbox-wrapper">
-                        <input class="task-list__checkbox-input" type="checkbox">
-                    </div>
-                    <div class="task-list__info">
-                            <span class="task-list__name">Comer Comida Azul</span>
-                            <span class="task-list__description">Encontrar Comida no Cavalo</span>
-                            <input class="task-list__date" type="date" value="">
-                    </div>
-                </div>   
-            </div>  
+            <div class="task-list"></div>  
             <div class="task-add">
                 <div class="task-add__button-container">
                     <button class="task-add__display-button">
                         <i data-lucide="plus"></i>
-                        <span class="task-name">Add New Task</span>
+                        <span class="task-add__label">Add New Task</span>
                     </button>
                 </div>
-                <div class="task-add__form-container hide">
+                <!---
+                <div class="task-add__form-container">
+                
                     <form class="task-add__form" id="task-add-form">
                         <label for="task-name-input">
                             <input 
@@ -87,10 +64,12 @@
                             </select>
                         </label>
                     </form>
+                    
                     <div class="task-add__controlls">
                         <button class="task-add__cancel" type="button">Cancel</button>
                         <button class="task-add__submit" type="submit" form="task-add-form">Add Task</button>
                     </div>
+                -->
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@
   --main-gray-strong: #A8A8A8;
   --main-gray-light: #F4F4F4;
   --main-white: #FAFAFA;
+  --main-white-warm: #FCFAF8;
   --main-yellow: #ACB8A8;
   --main-red: #DC4C3E;
 }
@@ -52,78 +53,88 @@ h1, h2, h3, h4, h5, h6 {
     isolation: isolate;
   }
 
-  .hide {
-    display: none;
-  }
+.hide {
+  display: none;
+}
 
-  .sidebar {
-    grid-area: sidebar;
-    border-radius: 10px;
-  }
+.sidebar {
+  grid-area: sidebar;
+  background-color: var(--main-white-warm);
+}
 
-  .content {
-    grid-area: content;
-  }
+.content {
+  grid-area: content;
+  padding: 5rem 2rem 0 2rem;
+}
 
-  .container {
-    height: 100vh;
-    display: grid;
-    grid-template-columns: 320px 1fr 1fr 1fr;
-    grid-template-rows: auto;
-    grid-template-areas:
-    "sidebar content content content";
-    padding: 2rem;
-  }
+.container {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 320px 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas:
+  "sidebar content content content";
+}
 
-  .header__project-name {
-    padding: 1rem;
-  }
+.header__project-name {
+  padding: 1rem 0;
+}
 
-  .container-task-add-btn {
-    border: 1px solid var(--main-black);
-    border-width: 1px 0px 1px 0px;
-  }
+.container-task-add-btn {
+  border: 1px solid var(--main-black);
+  border-width: 1px 0px 1px 0px;
+}
 
+
+.task-add__form-container {
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 0.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 10rem;
+}
+
+.task-add__form {
+  display: flex;
+  height: 80%;
+  flex-direction: column;
+  justify-content: space-evenly;
   
-  .task-add__form-container {
-    border: 1px solid black;
-    border-radius: 1rem;
-    padding: 0.25rem 1rem;
-    display: flex;
-    flex-direction: column;
-    height: 10rem;
-  }
+}
+.task-add__input {
+  border: 0;
+}
+.task-add__input--name, .task-add__input--description {
+  width: 100%;
+}
 
-  .task-add__form {
-    display: flex;
-    height: 80%;
-    flex-direction: column;
-    justify-content: space-evenly;
-    
-  }
-  .task-add__input {
-    border: 0;
-  }
-  .task-add__input--name, .task-add__input--description {
-    width: 100%;
-  }
-  
-  .task-add__input--name {
-    font-weight: bold;
-  }
+.task-add__input--name {
+  font-weight: bold;
+}
 
-  .task-add__controlls {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-  }
-  .task-add__select {
-    margin-right: auto;
-  }
+.task-add__controlls {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.task-add__select {
+  margin-right: auto;
+}
 
-  .hide {
-    display: none;
-  }
+.task-add__display-button {
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+  font-size: inherit;
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  cursor: pointer;
+}
+.task-add__display-button:hover {
+  color: var(--main-red);
+}
 
 .task-list__item {
   display: flex;
@@ -134,8 +145,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 .task-list__checkbox-input {
   appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border: 2px solid var(--main-red);
   border-radius: 1rem;
   cursor: pointer;
