@@ -1,4 +1,6 @@
 import { elementFactory } from "./elementFactory"
+import { getFormData } from "./getFormData";
+import { renderTask } from "./renderTask";
 
 export function renderAddTaskContainer() {
     const parentElement = document.querySelector(".task-add")
@@ -95,16 +97,71 @@ export function renderAddTaskContainer() {
             name: "taskProject"
         }
     )
+
+    const optionProject = elementFactory(
+        "option",
+        "Inbox",
+        {
+             value: "inbox",
+             selected: "selected"
+        }
+    )
+
+    const formControlls = elementFactory(
+        "div",
+        "",
+        {
+            class: "task-add__controlls"
+        }
+    )
+
+    const buttonCancel = elementFactory(
+        "button",
+        "Cancel",
+        {
+            class: "tas-add__cancel",
+            type: "button"
+        }
+    )
+
+    buttonCancel.addEventListener("click", () => {
+        container.remove()
+        const button = document.querySelector(".task-add__button-container")
+        button.classList.remove("hide")
+    })
+
+    const buttonSubmit = elementFactory(
+        "button",
+        "Add Task",
+        {
+            class: "task-add__submit",
+            type: "submit"
+        }
+    )
+
+    buttonSubmit.addEventListener("click", () => {
+        const Task = getFormData()
+        if (!Task.taskName) {
+            return alert("You Cannot Create Task Without Name")
+        }
+        renderTask(Task)
+    })
+
     
     labelName.append(inputName)
     labelDescription.append(inputDescription)
     labelDate.append(inputDate)
 
+    selectProject.append(optionProject)
     labelSelect.append(selectProject)
+    
 
     form.append(labelName, labelDescription, labelDate, labelSelect)
 
-    container.append(form)
+    formControlls.append(buttonCancel, buttonSubmit)
+
+
+    container.append(form, formControlls)
 
     parentElement.append(container)
 
