@@ -1,6 +1,8 @@
+import { CodeSquare } from "lucide";
 import { elementFactory } from "./elementFactory"
 import { getFormData } from "./getFormData";
 import { renderTask } from "./renderTask";
+import { taskFactory } from "./taskFactory";
 
 export function renderAddTaskContainer() {
     const parentElement = document.querySelector(".task-add")
@@ -140,8 +142,11 @@ export function renderAddTaskContainer() {
     )
 
     buttonSubmit.addEventListener("click", () => {
-        const Task = getFormData()
-        if (!Task.taskName) {
+        const obj = getFormData()
+        const Task = taskFactory(obj.taskName, obj.taskDescription, obj.taskDate, obj.taskProject);
+        
+        console.log(Task)
+        if (!Task.name) {
             return alert("You Cannot Create Task Without Name")
         }
         renderTask(Task)

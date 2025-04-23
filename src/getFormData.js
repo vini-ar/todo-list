@@ -5,6 +5,6 @@ export function getFormData() {
     const taskDate = document.querySelector("#task-date-input").value
     const taskProject = document.querySelector("#task-add__project-select").value
     
-    return {taskName, taskDescription, taskDate, taskProject}
+    return {taskName, taskDate, taskDescription, taskProject}
 
 }
