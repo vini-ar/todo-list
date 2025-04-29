@@ -6,6 +6,7 @@
   --main-white-warm: #FCFAF8;
   --main-yellow: #ACB8A8;
   --main-red: #DC4C3E;
+  --main-peach: #FFEFE5;
 }
 
 *, *::after, *::before {
@@ -57,12 +58,45 @@ h1, h2, h3, h4, h5, h6 {
   display: none;
 }
 
-.sidebar {
+#sidebar {
   grid-area: sidebar;
   background-color: var(--main-white-warm);
+  display: flex;
+  flex-direction: column;
 }
 
-.content {
+.sidebar__controls {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar__control, .sidebar__project {
+  padding: 1.5rem;
+  appearance: none;
+  background-color: inherit;
+  border: 0px;
+  font-size: inherit;
+}
+
+
+.sidebar__control--add-task {
+  color: var(--main-red);
+  font-weight: bold;
+}
+
+.sidebar__control:hover, .sidebar__project:hover  {
+  border-radius: 0.5rem;
+  background-color: var(--main-gray-strong);
+  cursor: pointer;
+
+}
+
+.sidebar__projects--create-project-button {
+  width: 100%;
+  font-weight: bold;
+}
+
+#content {
   grid-area: content;
   padding: 5rem 2rem 0 2rem;
 }

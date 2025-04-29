@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo</title>
+</head>
+<body>
+    <div class="container">
+        <div id='sidebar'>
+            <div class="sidebar__controls">
+                <button class="sidebar__control sidebar__control--add-task">Add Task</button>
+                <button class="sidebar__control sidebar__control--inbox">Inbox</button>
+           </div>
+            <div class="sidebar__projects">
+                <button class="sidebar__project sidebar__projects--create-project-button">My Projects</button>
+            </div>
+        </div>
+        <div id="content">
+            <!-- take off div container and class name --> 
+            <div class="header">
+                <h1 class="task-list__project-name">Inbox</h1>
+            </div>
+            <div class="task-list"></div>  
+            <div class="task-add">
+                <div class="task-add__button-container">
+                    <button class="task-add__display-button">
+                        <i data-lucide="plus"></i>
+                        <span class="task-add__label">Add New Task</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
