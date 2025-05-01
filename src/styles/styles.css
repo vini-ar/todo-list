@@ -217,3 +217,14 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.75rem;
   color: var(--main-gray-strong);
 }
+
+
+#floating-task-add-container {
+  background-color: yellow;
+  z-index: 999;
+  position: fixed;
+  top: 10%;
+  left: 25%;
+  transform: translate(-50%, -  50%);
+  width: 50%;
+}

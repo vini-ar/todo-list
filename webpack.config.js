@@ -4,20 +4,35 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: "development",
-  entry: "./src/index.js",
+  entry: {
+    inbox: "./src/pages/inbox.js",
+    projects: "./src/pages/projects.js" 
+  },
   output: {
-    filename: "main.js",
+    filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
   devtool: "eval-source-map",
   devServer: {
-    watchFiles: ["./src/index.html"],
+    watchFiles: ["./src/templates/**/*.html"],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
+      filename: "inbox.html",
+      template: "./src/templates/inbox.html",
+      chunks: ['inbox']
     }),
+    new HtmlWebpackPlugin({
+      filename: 'projects.html',
+      template: "./src/templates/projects.html",
+      chunks: ['projects']
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: './src/templates/index.html',
+      chunks: [],
+    })
   ],
   module: {
     rules: [
