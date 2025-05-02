@@ -1,11 +1,7 @@
-import { CodeSquare } from "lucide";
 import { elementFactory } from "./elementFactory"
-import { getFormData } from "./getFormData";
-import { renderTask } from "./renderTask";
-import { taskFactory } from "./taskFactory";
-import { clearForm } from "./clearForm"
+import { allProjects } from "../pages/inbox";
 
-export function createAddTaskContainer() {
+export function taskFormFactory() {
     const parentElement = document.querySelector(".task-add")
 
     const container = elementFactory(
@@ -101,13 +97,14 @@ export function createAddTaskContainer() {
         }
     )
 
-    const optionProject = elementFactory(
-        "option",
-        "Inbox",
-        {
-             value: "inbox",
-             selected: "selected"
-        }
+    allProjects.forEach((project) =>
+        selectProject.append(elementFactory(
+            "option",
+            project,
+            {
+                value: project
+            }
+        ))
     )
 
     const formControlls = elementFactory(
@@ -122,16 +119,10 @@ export function createAddTaskContainer() {
         "button",
         "Cancel",
         {
-            class: "tas-add__cancel",
+            class: "task-add__cancel",
             type: "button"
         }
     )
-
-    buttonCancel.addEventListener("click", () => {
-        container.remove()
-        const button = document.querySelector(".task-add__display-button")
-        button.style.display = 'flex'
-    })
 
     const buttonSubmit = elementFactory(
         "button",
@@ -141,25 +132,11 @@ export function createAddTaskContainer() {
             type: "submit"
         }
     )
-
-    buttonSubmit.addEventListener("click", () => {
-        const obj = getFormData()
-        const Task = taskFactory(obj.taskName, obj.taskDescription, obj.taskDate, obj.taskProject);
-        
-        if (!Task.name) {
-            return alert("You Cannot Create Task Without Name")
-        }
-
-        clearForm()
-        renderTask(Task)
-    })
-
     
     labelName.append(inputName)
     labelDescription.append(inputDescription)
     labelDate.append(inputDate)
 
-    selectProject.append(optionProject)
     labelSelect.append(selectProject)
     
 

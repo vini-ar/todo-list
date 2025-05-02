@@ -1,5 +1,10 @@
-import { createAddTaskContainer } from "./createAddTaskContainer"
+import { taskFormFactory } from "./taskFormFactory"
 import { loadPageSideBar } from "./loadPageSidebar"
+import { getFormData } from "./getFormData"
+import { taskFactory } from "./taskFactory"
+import { renderTask } from "./renderTask"
+
+
 
 export function sidebarControlls() {
     const addProjectButton = document.querySelector(".sidebar__projects--create-project-button")
@@ -12,9 +17,29 @@ export function sidebarControlls() {
     addTaskButton.addEventListener('click', (e) => {
         e.stopPropagation()
 
-        const taskAddContainer = createAddTaskContainer()
+        const taskAddContainer = taskFormFactory()
         taskAddContainer.setAttribute('id', 'floating-task-add-container')
         
+        const cancelButton = taskAddContainer.querySelector('.task-add__cancel')
+        const submitButton = taskAddContainer.querySelector('.task-add__submit')        
+
+        submitButton.onclick = () => {
+            const obj = getFormData()
+            const Task = taskFactory(obj.taskName, obj.taskDescription, obj.taskDate, obj.taskProject);
+            
+            if (!Task.name) {
+                return alert("You Cannot Create Task Without Name")
+            }
+    
+            const taskItemDiv = renderTask(Task)
+            const taskList = document.querySelector('.task-list')
+            taskList.append(taskItemDiv)
+
+            taskAddContainer.remove()
+        }
+
+    
+        cancelButton.onclick = () => taskAddContainer.remove()
         content.onclick = () => taskAddContainer.remove()
         sidebar.onclick = () => taskAddContainer.remove()
 
@@ -29,3 +54,4 @@ export function sidebarControlls() {
     inboxPageButton.onclick = () => loadPageSideBar(inboxPath, currPath)
         
 }
+

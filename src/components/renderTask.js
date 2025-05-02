@@ -2,49 +2,63 @@ import { elementFactory } from './elementFactory';
 
 
 export function renderTask(Task) {
-    const taskListInfo = document.querySelector(".task-list__info")
-    const taskList = document.querySelector(".task-list")
+   const taskList = document.querySelector(".task-list")
     
     const divContainer = elementFactory(
         "div", 
         "", 
-        { class: "task-list__item" }
+        { 
+            class: "task-list__item" 
+        }
     );
     
     const divCheckboxWrapper = elementFactory(
         "div", 
         "", 
-        { class: "task-list__checkbox-wrapper" }
+        { 
+            class: "task-list__checkbox-wrapper" 
+        }
     );
 
     const checkbox = elementFactory(
         "input", 
         "", 
-        { class: "task-list__checkbox-input", type: "checkbox"} 
+        { 
+            class: "task-list__checkbox-input", 
+            type: "checkbox"
+        } 
     );
 
     const divTaskWrapper = elementFactory(
         "div",
         "",
-        { class: "task-list__info" }
+        { 
+            class: "task-list__info" 
+        }
     );
 
     const spanTaskName = elementFactory(
         "span",
         Task.name,
-        { class: "task-list__name" }
+        { 
+            class: "task-list__name" 
+        }
     );
 
     const spanTaskDescription = elementFactory(
         "span",
         Task.description,
-        { class: "task-list__description" }  
+        { 
+            class: "task-list__description" 
+        }  
     );
 
     const inputTaskDate = elementFactory(
         "input",
         "",
-        { class: "task-list_-date", type: "date", value: Task.deadline }
+        { 
+            class: "task-list_-date", type: "date", value: Task.deadline 
+        }
 
     );
 
@@ -53,5 +67,5 @@ export function renderTask(Task) {
 
     divContainer.append(divCheckboxWrapper, divTaskWrapper)
 
-    taskList.append(divContainer)
+    return divContainer
 }
