@@ -1,21 +1,17 @@
 import '../styles/styles.css'
 import { createIcons, icons } from 'lucide';
 import { taskFormFactory } from '../components/taskFormFactory'
-import { sidebarControlls } from '../components/sideBarControlls';
 import { getFormData } from '../components/getFormData';
-import { taskFactory } from '../components/taskFactory';
 import { clearForm } from '../components/clearForm'
 import { renderTask } from '../components/renderTask'
 import { handleEventListenerTaskItem } from '../components/handleEventListenerTaskItem';
-import { addTaskProject, factoryProject } from '../components/projectsArray';
-import { add } from 'date-fns';
-import { handleAddTaskButtonClick } from '../components/handleAddTaskButtonClick';
+import { displaySidebar } from '../components/displaySidebar';
+import { handleAddTaskSideBarButtonClick } from '../components/handleAddTaskSideBarButtonClick.js';
 
 
 createIcons({ icons });
 
 export let allTasks = [];
-export let allProjects = ["inbox", "teste"];
 
 let userTasksDatabaseKey = localStorage.getItem("userTasks")
 export let userTasksDatabase = JSON.parse(userTasksDatabaseKey)
@@ -26,11 +22,10 @@ const taskList = document.querySelector('.task-list')
 const displayButton = document.querySelector(".task-add__display-button") 
 const taskAdd = document.querySelector('.task-add')
 const taskAddButton = document.getElementById('create-task-add-form')
-const addTasKButton = document.querySelector(".sidebar__control--add-task")
 
 
 
-function handleAddTaskSubmitButton(formContainer) {
+function handleContentAddTaskSubmitButton(formContainer) {
     const Task = getFormData(formContainer);
         
     if (!Task.name) {
@@ -49,21 +44,27 @@ function handleAddTaskSubmitButton(formContainer) {
 
 function handleEventListenerContentFormButtonInbox(formContainer) {
     const cancelButton = formContainer.querySelector(".task-add__cancel")
+
+    if (cancelButton) {
+        cancelButton.onclick = () => {
+            formContainer.remove()
+            displayButton.style.display = 'flex'
+        }
+    
+    }
+
     const submitButton = formContainer.querySelector(".task-add__submit")
 
-
-    cancelButton.onclick = () => {
-        formContainer.remove()
-        displayButton.style.display = 'flex'
+    if (submitButton) {
+        submitButton.onclick = () => {
+            handleContentAddTaskSubmitButton(formContainer)
+            clearForm()
+        }
     }
 
-    submitButton.onclick = () => {
-        handleAddTaskSubmitButton(formContainer)
-        clearForm()
-    }
 }
 
-function handleTaskAddButtonClick() {
+function handleContentTaskAddButtonClick() {
     if (taskAddButton) {
         taskAddButton.onclick = () => {
             taskAddButton.style.display = 'none'
@@ -87,29 +88,9 @@ function displayUserTask() {
     }
 }
 
-function handleAddTaskSideBarButtonClick() {
-    addTasKButton.onclick = () => {
-        const formContainer = taskFormFactory()
-        formContainer.setAttribute("id", "floating-task-add-container")
-        
-        const cancelButton = formContainer.querySelector(".task-add__cancel")
-        const submitButton = formContainer.querySelector(".task-add__submit")
-
-        cancelButton.onclick = () => formContainer.remove()
-        submitButton.onclick = () => {
-            handleAddTaskSubmitButton(formContainer)
-            formContainer.remove()          
-        } 
-        
-        
-        content.append(formContainer)
-    }
-    
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-    handleTaskAddButtonClick();
+    displaySidebar()
+    handleContentTaskAddButtonClick();
     displayUserTask()
     handleAddTaskSideBarButtonClick()
-
 })

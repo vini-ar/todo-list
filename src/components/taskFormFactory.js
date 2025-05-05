@@ -97,15 +97,23 @@ export function taskFormFactory() {
         }
     )
 
-    allProjects.forEach((project) =>
-        selectProject.append(elementFactory(
-            "option",
-            project,
-            {
-                value: project
-            }
-        ))
+    const optionInbox = elementFactory(
+        "option",
+        "Inbox",
+        {
+            value: "inbox"
+        }
     )
+
+    // allProjects.forEach((project) =>
+    //     selectProject.append(elementFactory(
+    //         "option",
+    //         project,
+    //         {
+    //             value: project
+    //         }
+    //     ))
+    // )
 
     const formControlls = elementFactory(
         "div",
@@ -136,6 +144,8 @@ export function taskFormFactory() {
     labelName.append(inputName)
     labelDescription.append(inputDescription)
     labelDate.append(inputDate)
+
+    selectProject.append(optionInbox)
 
     labelSelect.append(selectProject)
     
