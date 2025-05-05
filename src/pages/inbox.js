@@ -8,6 +8,8 @@ import { clearForm } from '../components/clearForm'
 import { renderTask } from '../components/renderTask'
 import { handleEventListenerTaskItem } from '../components/handleEventListenerTaskItem';
 import { addTaskProject, factoryProject } from '../components/projectsArray';
+import { add } from 'date-fns';
+import { handleAddTaskButtonClick } from '../components/handleAddTaskButtonClick';
 
 
 createIcons({ icons });
@@ -18,74 +20,96 @@ export let allProjects = ["inbox", "teste"];
 let userTasksDatabaseKey = localStorage.getItem("userTasks")
 export let userTasksDatabase = JSON.parse(userTasksDatabaseKey)
 
+ 
+const content = document.querySelector("#content")
 const taskList = document.querySelector('.task-list')
-const displayButton = document.querySelector(".task-add__display-button")  
+const displayButton = document.querySelector(".task-add__display-button") 
+const taskAdd = document.querySelector('.task-add')
+const taskAddButton = document.getElementById('create-task-add-form')
+const addTasKButton = document.querySelector(".sidebar__control--add-task")
 
 
 
+function handleAddTaskSubmitButton(formContainer) {
+    const Task = getFormData(formContainer);
+        
+    if (!Task.name) {
+        return alert("You Cannot Create Task Without Name")
+    }
 
-function handleEventListenerContentFormButtonInbox(taskFormDiv) {
-    const cancelButton = taskFormDiv.querySelector(".task-add__cancel")
-    const submitButton = taskFormDiv.querySelector(".task-add__submit")
+    allTasks.push(Task)
+
+    const taskItemDiv = renderTask(Task)
+    taskList.append(taskItemDiv)
+    handleEventListenerTaskItem(taskItemDiv)
+        
+    localStorage.setItem("userTasks", JSON.stringify(allTasks))
+}
+
+
+function handleEventListenerContentFormButtonInbox(formContainer) {
+    const cancelButton = formContainer.querySelector(".task-add__cancel")
+    const submitButton = formContainer.querySelector(".task-add__submit")
 
 
     cancelButton.onclick = () => {
-        taskFormDiv.remove()
+        formContainer.remove()
         displayButton.style.display = 'flex'
     }
 
     submitButton.onclick = () => {
-        const obj = getFormData()
-        const Task = taskFactory(obj.taskName, obj.taskDescription, obj.taskDate, obj.taskProject);
-        
-        if (!Task.name) {
-            return alert("You Cannot Create Task Without Name")
-        }
-
-        allTasks.push(Task)
-
+        handleAddTaskSubmitButton(formContainer)
         clearForm()
-
-        const taskItemDiv = renderTask(Task)
-        taskItemDiv.dataset.id = Task.id
-        handleEventListenerTaskItem(taskItemDiv)
-
-        taskList.append(taskItemDiv)
-        
-        localStorage.setItem("userTasks", JSON.stringify(allTasks))
     }
 }
 
 function handleTaskAddButtonClick() {
-    const taskAddButton = document.getElementById('create-task-add-form')
-    const taskAdd = document.querySelector('.task-add')
-
     if (taskAddButton) {
         taskAddButton.onclick = () => {
             taskAddButton.style.display = 'none'
-            const taskFormDiv = taskFormFactory()
-            handleEventListenerContentFormButtonInbox(taskFormDiv)
-            taskAdd.append(taskFormDiv)
+            const formContainer = taskFormFactory()
+            handleEventListenerContentFormButtonInbox(formContainer)
+            taskAdd.append(formContainer)
         }
     }
 
 }
 
 function displayUserTask() {
-
     const inboxTasks = userTasksDatabase.filter( (task) => task.projectId === 'inbox')
-    
-
-    inboxTasks.forEach(taskItem => {
-        const taskItemDiv = renderTask(taskItem)
-        handleEventListenerTaskItem(taskItemDiv)
-        taskList.append(taskItemDiv)
-    });
-
+    if (taskList) {
+        inboxTasks.forEach((Task) =>  {
+            const taskItemDiv = renderTask(Task)
+            taskItemDiv.dataset.id = Task.id
+            handleEventListenerTaskItem(taskItemDiv)
+            taskList.append(taskItemDiv)
+        })
+    }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function handleAddTaskSideBarButtonClick() {
+    addTasKButton.onclick = () => {
+        const formContainer = taskFormFactory()
+        formContainer.setAttribute("id", "floating-task-add-container")
+        
+        const cancelButton = formContainer.querySelector(".task-add__cancel")
+        const submitButton = formContainer.querySelector(".task-add__submit")
+
+        cancelButton.onclick = () => formContainer.remove()
+        submitButton.onclick = () => {
+            handleAddTaskSubmitButton(formContainer)
+            formContainer.remove()          
+        } 
+        
+        
+        content.append(formContainer)
+    }
+    
+}
+
+document.addEventListener("DOMContentLoaded", () => {
     handleTaskAddButtonClick();
-    sidebarControlls()
     displayUserTask()
-});
+    handleAddTaskSideBarButtonClick()
+
+})

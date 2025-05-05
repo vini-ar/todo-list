@@ -1,10 +1,13 @@
-export function getFormData() {
+import { taskFactory } from "./taskFactory"
 
-    const taskName = document.querySelector("#task-name-input").value
-    const taskDescription = document.querySelector("#task-description-input").value
-    const taskDate = document.querySelector("#task-date-input").value
-    const taskProject = document.querySelector("#task-add__project-select").value
+
+export function getFormData(formContainer) {
+
+    const taskName = formContainer.querySelector("#task-name-input").value
+    const taskDescription = formContainer.querySelector("#task-description-input").value
+    const taskDate = formContainer.querySelector("#task-date-input").value
+    const taskProject = formContainer.querySelector("#task-add__project-select").value
     
-    return {taskName, taskDate, taskDescription, taskProject}
+    return taskFactory(taskName, taskDescription, taskDate, taskProject)
 
 }
