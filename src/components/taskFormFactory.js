@@ -19,6 +19,14 @@ export function taskFormFactory() {
         }
     );
 
+    const divWrapper = elementFactory(
+        "div",
+        "",
+        {
+            class: "divWrapperName"
+        }
+    )
+
     const labelName = elementFactory(
         "label",
         "",
@@ -129,7 +137,10 @@ export function taskFormFactory() {
         }
     )
     
+
     labelName.append(inputName)
+    divWrapper.append(labelName)
+
     labelDescription.append(inputDescription)
 
     selectProject.append(optionInbox)
@@ -137,7 +148,7 @@ export function taskFormFactory() {
     labelSelect.append(selectProject)
     
 
-    form.append(labelName, labelDescription, dateButton, labelSelect)
+    form.append(divWrapper, labelDescription, dateButton, labelSelect)
 
     formControlls.append(buttonCancel, buttonSubmit)
 
