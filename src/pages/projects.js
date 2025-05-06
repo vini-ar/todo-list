@@ -1,7 +1,9 @@
 import { displaySidebar } from '../components/displaySidebar'
 import { handleAddTaskSideBarButtonClick } from '../components/handleAddTaskSideBarButtonClick'
 import '../styles/styles.css'
-import { getUserProjecstLength } from '../components/projectManager'
+import { getColors, getUserProjecstLength, getUserProjectsList } from '../components/projectManager'
+import { elementFactory } from '../components/elementFactory'
+
 
 function displayProjectCounter() {
     const projectSpanCount = document.querySelector(".project__counter-span")
@@ -21,11 +23,61 @@ function handleEventListenerContentAddProjectButton() {
     const projectButton = document.querySelector(".project__create-button")
     projectButton.onclick = () => {
         displayAddProjectForm()
-        //Create Form on projects.html
-        //Attach form on innerHTML here
+        renderColorOptions()
+        renderParentProjectOptions()
     }
 
 }
+
+function renderColorOptions() {
+    const projectColorSelect = document.querySelector("#projectColorSelect")
+    const colors = getColors()
+    colors.forEach((color) => {
+        const colorOption = elementFactory(
+            "option",
+            color,
+            {
+                value: color
+            }
+        )
+        projectColorSelect.append(colorOption)
+    })
+
+}
+
+function renderParentProjectOptions() {
+    const projectParentSelect = document.querySelector("#projectParentSelect")
+    const userProjects = getUserProjectsList()
+    const userProjectsLength = getUserProjecstLength()
+
+    if (userProjectsLength !== 0) {
+        userProjects.forEach((project) => {
+            const projectOption = elementFactory(
+                "option",
+                project,
+                {
+                    value: project
+                }
+            )
+            projectParentSelect.append(projectOption)
+        })
+    }
+
+    const projectParentDefaultOption = elementFactory(
+        "option",
+        "No parent",
+        {
+            value: "No parent",
+            selected: "selected"
+        }
+    )
+
+    projectParentSelect.append(projectParentDefaultOption)
+    
+}
+
+
+
 
 function handleFormSubmitClick() {
     //prevent reload page
@@ -43,6 +95,22 @@ function handleFormCancelCLick() {
 
 
 function displayAddProjectForm() {
+    const formContainer = document.querySelector(".formContainer")
+    formContainer.innerHTML = `
+    <form id="newProjectForm" action="/submit" method="POST">
+        <label for="projectName">
+            <input type="text" name="projectName" id="projectNameInput">
+        </label>
+        <select id= "projectColorSelect" name="projectColor">
+        </select>
+        <select name="projectParent" id="projectParentSelect"></select>
+    </form>
+    <div class="form-controlls">
+        <button class="cancelButton">Cancel</button>
+        <button class="submitButton"type='submit' form="newProjectForm">Submit</button>
+    </div>
+                
+    `
 
 }
 
@@ -51,4 +119,5 @@ document.addEventListener("DOMContentLoaded", () => {
     displaySidebar()
     displayProjectCounter()
     handleAddTaskSideBarButtonClick()
+    handleEventListenerContentAddProjectButton()
 })

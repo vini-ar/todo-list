@@ -1,7 +1,17 @@
-export let userProjects = []
-
+let userProjects = []
+let colors = ["red", "yellow", "black"]
 
 export function userProjectObjectFactory(name="", color="", parentProject="") {
+    if (!name) {
+        return alert("You cannot create an project Without Name")
+    }
+    if (!color.includes(color)) {
+         return alert("Invalid Color")
+    }
+    if (!userProjects.includes(parentProject)) {
+        parentProject = "No Parent"
+    }
+
     return {
         name: name,
         color: color,
@@ -16,9 +26,11 @@ export function addProject(Project) {
     userProjects.push(Project)
 }
 
+export function getColors() {
+    return colors
+}
 
-
-export function getUserProjects() {
+export function getUserProjectsList() {
     return userProjects
 }
 
