@@ -60,24 +60,12 @@ export function taskFormFactory() {
         }
     ); 
 
-    const labelDate = elementFactory(
-        "label",
-        "",
+    const dateButton = elementFactory(
+        "button",
+        "Date",
         {
-            for: "task-date-input"
+            id: "displayDateContainerButton"
         }
-    );
-
-    const inputDate = elementFactory(
-        "input",
-        "",
-        {
-            type: "date",
-            name: "taskDate",
-            id: "task-date-input",
-            class: "task-add__input task-add__input-date",
-        }
-
     );
     const labelSelect = elementFactory(
         "label",
@@ -143,14 +131,13 @@ export function taskFormFactory() {
     
     labelName.append(inputName)
     labelDescription.append(inputDescription)
-    labelDate.append(inputDate)
 
     selectProject.append(optionInbox)
 
     labelSelect.append(selectProject)
     
 
-    form.append(labelName, labelDescription, labelDate, labelSelect)
+    form.append(labelName, labelDescription, dateButton, labelSelect)
 
     formControlls.append(buttonCancel, buttonSubmit)
 

@@ -234,3 +234,15 @@ h1, h2, h3, h4, h5, h6 {
   text-decoration: none;
   color: inherit;
 }
+
+#displayDateContainerButton {
+  width: fit-content;
+}
+.userDateContainer {
+  background-color: yellow;
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  border-radius: 1rem;
+  padding: 0.5rem;
+}

@@ -1,5 +1,5 @@
 import '../styles/styles.css'
-import { createIcons, icons } from 'lucide';
+import { createIcons, DownloadCloud, icons } from 'lucide';
 import { taskFormFactory } from '../components/taskFormFactory'
 import { getFormData } from '../components/getFormData';
 import { clearForm } from '../components/clearForm'
@@ -7,6 +7,7 @@ import { renderTask } from '../components/renderTask'
 import { handleEventListenerTaskItem } from '../components/handleEventListenerTaskItem';
 import { displaySidebar } from '../components/displaySidebar';
 import { handleAddTaskSideBarButtonClick } from '../components/handleAddTaskSideBarButtonClick.js';
+import { elementFactory } from '../components/elementFactory.js';
 
 
 createIcons({ icons });
@@ -61,6 +62,48 @@ function handleEventListenerContentFormButtonInbox(formContainer) {
             clearForm()
         }
     }
+
+    const dateButton = formContainer.querySelector("#displayDateContainerButton")
+
+    if (dateButton) {
+        dateButton.onclick = (e) => {
+            e.preventDefault()
+            const div = elementFactory("div", "", { class: "userDateContainer"})
+            div.innerHTML = ` 
+                    <div class="userDateButtons">
+                        <button id="todayButton">Today</button>
+                        <button id="tomorrowButton">Tomorrow</button>
+                        <button id="thisWeekendButton">This weekend</button>
+                        <button id="nextWeekButton">Next week</button>
+                    </div>
+                    <div class="userDateCalendar">
+                        <span>Calendar</span>
+                    </div>
+                    <div class="userHour">
+                        <button id="timeButton">Time</button>
+                    </div>
+            
+            `
+            const positionObj = dateButton.getBoundingClientRect();
+            const topPosition = positionObj.y + dateButton.offsetHeight
+            const leftPosition = positionObj.x
+
+            div.style.position = "absolute"
+            div.style.top = JSON.stringify(topPosition) + "px"
+            div.style.left = JSON.stringify(leftPosition) + "px"
+
+            document.body.append(div)
+            const userDateContainer = document.querySelector(".userDateContainer")
+            userDateContainer.onclick = (event) => {
+                if (event.target !== userDateContainer ) {
+                    userDateContainer.remove()
+                }
+            }
+        }
+
+            //get position from button
+            //add position from button to relative by css
+        }
 
 }
 
