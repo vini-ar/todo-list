@@ -1,6 +1,6 @@
+import '../styles/styles.css'
 import { displaySidebar } from '../components/displaySidebar'
 import { handleAddTaskSideBarButtonClick } from '../components/handleAddTaskSideBarButtonClick'
-import '../styles/styles.css'
 import { getColors, getUserProjecstLength, getUserProjectsList } from '../components/projectManager'
 import { elementFactory } from '../components/elementFactory'
 
@@ -9,7 +9,7 @@ function displayProjectCounter() {
     const projectSpanCount = document.querySelector(".project__counter-span")
     const counter = getUserProjecstLength()
 
-    if (counter === 0) {
+    if (counter === 0 || counter === 1) {
         projectSpanCount.textContent = counter + " project"
     }
     else {
@@ -76,7 +76,30 @@ function renderParentProjectOptions() {
     
 }
 
+//Refound curso feel tennis
+//Atualizar Task Obj
+    //Data => mantem (?)
+    //Adicionar 
+        //Hora
+        //Tags
+          //array de tags
 
+//create task page Template
+
+//Create project page template
+    //Inbox se encaixa
+
+//Create today page
+
+
+//Atualizar TaskFormFactory
+    //Transformar Data Input em button
+    //Adicionar EventListener
+        //Abrir Container
+        //Opcao de Hoje + Amanha + Final de Semana(sabado) + proxima semana
+        //Sem Data
+        //calendario
+        //Opcao de Hora
 
 
 function handleFormSubmitClick() {
@@ -86,6 +109,7 @@ function handleFormSubmitClick() {
     //create project Oject
     //add project to userProjects array
     //remove container
+    //open project page
 }
 
 function handleFormCancelCLick() {
