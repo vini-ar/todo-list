@@ -8,8 +8,8 @@ import { handleEventListenerTaskItem } from '../components/handleEventListenerTa
 import { displaySidebar } from '../components/displaySidebar';
 import { handleAddTaskSideBarButtonClick } from '../components/handleAddTaskSideBarButtonClick.js';
 import { elementFactory } from '../components/elementFactory.js';
-import { format } from 'date-fns';
-import { getDayName, getMonthName, getToday } from '../components/dataManager.js';
+import { constructNow, format } from 'date-fns';
+import { getDay, getMontDayFormatString, getMonthName, getNextWeek, getToday, getTomorrow } from '../components/dataManager.js';
 
 
 
@@ -100,32 +100,50 @@ function handleEventListenerContentFormButtonInbox(formContainer) {
             content.append(userDateContainer)
             
             //add event listener for each button
-            const todayButton = document.querySelector("#todayButton")
-            const dateSpan = document.querySelector(".dateContainer__span")
+            const dateSpan = document.querySelector("#date-span")
             const inputName = document.querySelector("#task-name-input");
             const divWrapperName = document.querySelector(".divWrapperName")
+
+            const todayButton = document.querySelector("#todayButton")
+            const tomorrowButton = document.querySelector('#tomorrowButton')
+            const thisWeekendButton = document.querySelector("#thisweekendButton")
+            const nextWeekButton = document.querySelector("#nextWeekButton")
+
 
             if (todayButton) {
                 todayButton.onclick = () => {
                     const todayDate = getToday()
-                    if (dateSpan) {
-                        dateSpan.textContent = todayDate;
-                    } else {
-                        const span = elementFactory("span", "", {class: "dateContainer__span"})
-                        span.dataset.deadline = todayDate
-                        span.textContent = getMonthName(todayDate) + " " + getDayName(todayDate)
-                        
-                        divWrapperName.append(span)
-                    }
-                    userDateContainer.remove();
-    
-                }   
+                    dateSpan.textContent = getMontDayFormatString(todayDate)
+                    userDateContainer.remove() 
+                }
             }
+            if (tomorrowButton) {
+                tomorrowButton.onclick = () => {
+                    const tomorrowDate = getTomorrow()
+                    dateSpan.textContent = getMontDayFormatString(tomorrowDate)
+                    userDateContainer.remove()
+                }
+
+            }
+            if (thisWeekendButton) {
+                thisWeekendButton.onclick = () => {
+                    
+                }
+            }
+
+            if (nextWeekButton) {
+                nextWeekButton.onclick = () => {
+                    const nextWeek = getNextWeek()
+                    dateSpan.textContent = getMontDayFormatString(nextWeek)   
+                    userDateContainer.remove()                 
+                }
+
+            }
+
 
         }
 
     }
-
 }
 
 function handleContentTaskAddButtonClick() {

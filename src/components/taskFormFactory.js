@@ -27,6 +27,14 @@ export function taskFormFactory() {
         }
     )
 
+    const spanDate = elementFactory(
+        "div",
+        "",
+        {
+            id: "date-span"
+        }
+    )
+
     const labelName = elementFactory(
         "label",
         "",
@@ -139,7 +147,7 @@ export function taskFormFactory() {
     
 
     labelName.append(inputName)
-    divWrapper.append(labelName)
+    divWrapper.append(spanDate, labelName)
 
     labelDescription.append(inputDescription)
 
