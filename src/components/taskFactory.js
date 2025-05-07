@@ -1,4 +1,4 @@
-export function taskFactory(name="", description="", deadline={},  project="", labels=[]) {
+export function taskFactory(name="", description="", deadline={},  project="", priority="") {
     return {
         id: "id" + Math.random().toString(16).slice(2),
         projectId: project,
@@ -7,7 +7,7 @@ export function taskFactory(name="", description="", deadline={},  project="", l
         hour: deadline.hour,
         description: description,
         project: project,
-        labels: labels
+        priority: priority
     }
 
 }

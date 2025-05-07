@@ -83,6 +83,15 @@ export function taskFormFactory() {
             id: "displayDateContainerButton"
         }
     );
+
+    const priorityButton = elementFactory(
+        "button",
+        "Priority",
+        {
+            id: "priorityButton"
+        }
+    )
+
     const labelSelect = elementFactory(
         "label",
         "",
@@ -156,7 +165,7 @@ export function taskFormFactory() {
     labelSelect.append(selectProject)
     
 
-    form.append(divWrapper, labelDescription, dateButton, labelSelect)
+    form.append(divWrapper, labelDescription, dateButton, priorityButton, labelSelect)
 
     formControlls.append(buttonCancel, buttonSubmit)
 

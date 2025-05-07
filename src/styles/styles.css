@@ -126,7 +126,6 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0.25rem 1rem;
   display: flex;
   flex-direction: column;
-  height: 10rem;
 }
 
 .task-add__form {
@@ -258,4 +257,8 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   padding: 0.1rem;
   background-color: var(--main-red);
+}
+
+#priorityButton {
+  width: fit-content;
 }
