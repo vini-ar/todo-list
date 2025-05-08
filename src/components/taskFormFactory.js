@@ -7,7 +7,10 @@ export function taskFormFactory() {
     const container = elementFactory(
         "div",
         "",
-        { class: "task-add__form-container" }
+        { 
+            class: "task-add__form-container",
+            id: "task-add-form-container"
+        }
     );
     
     const form = elementFactory(
@@ -80,7 +83,8 @@ export function taskFormFactory() {
         "button",
         "Date",
         {
-            id: "displayDateContainerButton"
+            id: "displayDateContainerButton",
+            type: "button"
         }
     );
 
@@ -88,7 +92,8 @@ export function taskFormFactory() {
         "button",
         "Priority",
         {
-            id: "priorityButton"
+            id: "priorityButton",
+            type: "button"
         }
     )
 

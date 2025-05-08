@@ -1,7 +1,12 @@
+import { addNewTask } from './dataManager.js';
 import { getMontDayFormatString, getNextWeek, getToday, getTomorrow, getNextWeekendDay } from './dateManager.js';
-import { clearForm } from './domChanger.js';
-import { renderDateContainer, renderSidebar } from "./renderElements.js";
+import { clearForm, placeElementAt, removeContainer, removeElementById, toggleButtonVisibility } from './domChanger.js';
+import { isValidForm } from './formValidations.js';
+import { getFormData } from './getFormData.js';
+import { createDateContainer, renderDateContainer, renderSidebar } from "./renderElements.js";
+import { renderTask } from './renderTask.js';
 import { taskFormFactory } from "./taskFormFactory.js";
+
 
 
 function handleTodayButtonClick(dateContainer) {
@@ -57,22 +62,24 @@ function handleNextWeekButtonClick() {
         nextWeekButton.onclick = () => {
             const nextWeek = getNextWeek()
             dateSpan.textContent = getMontDayFormatString(nextWeek)   
-            userDateContainer.remove()                 
         }
 
     }
 
 }
 
-export function handleAddTaskCancelButtonClick() {
+export function handleFormCancelButtonClick() {
     return () => {
         
-        removeFormContainer()
+        removeElementById("task-add-form-container")
     }
 }
 
-export function handleAddTaskSubmitButtonClick() {
+export function handleContentAddTaskSubmitButtonClick() {
     return () => {
+        //get form data
+        //create obj
+        //clearForm
         clearForm()
     }
 }
@@ -94,7 +101,50 @@ export function handleProjectContentAddTaskButtonClick() {
         }
     }
 }
+export function handleContentTaskFormButtonsClick(formContainer) {
+    const cancelButton = formContainer.querySelector(".task-add__cancel")
+    const submitButton = formContainer.querySelector(".task-add__submit")
+    const dateButton = formContainer.querySelector("#displayDateContainerButton")
+    const priorityButton = formContainer.querySelector("#priorityButton")
+    const addTaskButton = document.querySelector("#create-task-add-form")
+    const taskList = document.querySelector(".task-list")
 
-export function handleDateButtonClick(formContainer) {
-    renderDateContainer(formContainer)
+    cancelButton?.addEventListener("click", (e) => {
+        e.preventDefault();
+        formContainer.remove()
+        toggleButtonVisibility(addTaskButton)
+        
+        
+    })
+
+    submitButton?.addEventListener("click", () => {
+        if (!isValidForm()) {
+            return alert("Task name empty")
+        }
+        const newTask = getFormData(formContainer)
+        addNewTask(newTask)
+        const taskItemDiv = renderTask(newTask)
+        taskItemDiv.dataset.id = newTask.id
+        taskList.append(taskItemDiv)
+
+    })
+
+
+    dateButton?.addEventListener("click", (e) => {
+        const dateContainer = document.querySelector(".userDateContainer")
+        if (!dateContainer) {
+            const newDateContainer = createDateContainer()
+            placeElementAt(newDateContainer, e.clientX, e.clientY)
+            handleNextWeekButtonClick()
+            handleThisWeekendButtonClick()
+            handleTomorrowButtonClick()
+            handleTodayButtonClick(dateContainer)
+        }
+        
+    })
+
+
+
+    priorityButton?.addEventListener("click", () => formContainer.remove())
+
 }
