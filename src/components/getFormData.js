@@ -2,13 +2,20 @@ import { taskFactory } from "./taskFactory"
 
 
 export function getFormData(formContainer) {
+    const taskNameInput = formContainer.querySelector("#task-name-input")
+    const taskDescriptionInput = formContainer.querySelector("#task-description-input")
+    const taskDateSpan = formContainer?.querySelector("#task-date-span")
+    const taskPrioritySpan = formContainer?.querySelector("task-priority-span")
+    const taskProjectSelect = formContainer.querySelector("#task-add__project-select")
 
-    const taskName = formContainer.querySelector("#task-name-input").value
-    const taskDescription = formContainer.querySelector("#task-description-input").value
-    const taskDate = ""
-    const taskHour = ""
-    const taskPriority = ""
-    const taskProject = formContainer.querySelector("#task-add__project-select").value
+    const taskName = taskNameInput.value
+    const taskDescription = taskDescriptionInput.value
+    const taskDate = taskDateSpan.textContent
+    const taskPriority = taskPrioritySpan.textContent
+    const taskProject = taskProjectSelect.value
+    
+
+    
    
     
     return taskFactory(taskName, taskDescription, taskDate, taskHour, taskProject, taskPriority)

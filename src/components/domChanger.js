@@ -1,9 +1,14 @@
 export function clearForm() {
     const inputName = document.querySelector("#task-name-input")
     const inputDescription = document.querySelector("#task-description-input")
-    
+    const spanDate = document.querySelector("#task-date-span")
+    const spanPriority = document.querySelector("#task-priority-span")
+
     inputName.value = ""
     inputDescription.value = ""
+    spanDate.textContent = ""
+    spanDate.dataset.date = ""
+    spanPriority.textContent = ""
 }
 
 export function removeElementById(id) {

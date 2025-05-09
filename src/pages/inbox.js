@@ -3,8 +3,8 @@ import { CodeSquare, createIcons, DownloadCloud, icons } from 'lucide';
 import { renderTask } from '../components/renderTask'
 import { handleEventListenerTaskItem } from '../components/handleEventListenerTaskItem';
 import { handleAddTaskSideBarButtonClick } from '../components/handleAddTaskSideBarButtonClick.js';
-import { renderAddTaskFloatingFormContainer, renderAddTaskFormContainer, renderFloatingFormContainer, renderFormContainer, renderProjectContentTemplate, renderSidebar, renderUserTask } from '../components/renderElements.js';
-import { hiddeButton, toggleElementVisibility } from '../components/domChanger.js';
+import { renderAddTaskFormContainer, renderContentAddTaskFormContainer, renderFloatingFormContainer, renderFormContainer, renderProjectContentTemplate, renderSidebar, renderSidebarAddTaskFormContainer, renderUserTask } from '../components/renderElements.js';
+import { hiddeButton, toggleButtonVisibility, toggleElementVisibility } from '../components/domChanger.js';
 
 
 createIcons({ icons });
@@ -21,14 +21,13 @@ function handleEventListenerProjectPage() {
     const contentAddTaskButton = document.querySelector(".task-add__display-button")
 
 
-    sidebarAddTaskButton.addEventListener("click", renderAddTaskFloatingFormContainer)
+    sidebarAddTaskButton.addEventListener("click", renderSidebarAddTaskFormContainer)
     contentAddTaskButton.addEventListener("click", (e) => {
-        toggleElementVisibility(e.target)
-        renderAddTaskFormContainer()
+        toggleButtonVisibility(e.target)
+        renderContentAddTaskFormContainer()
     })
 
 }
 
 renderProjectPage()
 handleEventListenerProjectPage()
-

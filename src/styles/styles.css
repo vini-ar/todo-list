@@ -121,11 +121,14 @@ h1, h2, h3, h4, h5, h6 {
 
 
 .task-add__form-container {
+  margin: auto;
   border: 1px solid black;
   border-radius: 1rem;
   padding: 0.25rem 1rem;
   display: flex;
   flex-direction: column;
+  height: 300px;
+  width: 300px;
 }
 
 .task-add__form {
@@ -169,14 +172,14 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--main-red);
 }
 
-.task-list__item {
+.task-item {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
   padding: 1rem 0;
   border-bottom: 1px solid var(--main-gray-strong);
 }
-.task-list__checkbox-input {
+.task-item__checkbox-input {
   appearance: none;
   width: 24px;
   height: 24px;
@@ -187,7 +190,7 @@ h1, h2, h3, h4, h5, h6 {
   background-color: white;
 }
 
-.task-list__checkbox-input::after {
+.task-item__checkbox-input::after {
   content: "";
   position: absolute;
   top: 2px;
@@ -200,19 +203,19 @@ h1, h2, h3, h4, h5, h6 {
   display: none;
 }
 
-.task-list__checkbox-input:checked {
+.task-item__checkbox-input:checked {
   background-color: var(--main-red);
 }
 
-.task-list__checkbox-input:checked::after {
+.task-item__checkbox-input:checked::after {
   display: block;
 }
-.task-list__info {
+.task-item__info {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
 }
-.task-list__description {
+.task-item__description {
   font-size: 0.75rem;
   color: var(--main-gray-strong);
 }
@@ -225,7 +228,6 @@ h1, h2, h3, h4, h5, h6 {
   top: 10%;
   left: 25%;
   transform: translate(-50%, -  50%);
-  width: 50%;
 }
 
 
@@ -251,14 +253,34 @@ h1, h2, h3, h4, h5, h6 {
   gap: 1rem;
 }
 
+.spanContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
 #date-span {
-  border: 1px solid black;
-  width: fit-content;
   font-weight: bold;
-  padding: 0.1rem;
-  background-color: var(--main-red);
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
 }
 
 #priorityButton {
   width: fit-content;
+}
+
+.priorityContainer {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  padding: 1rem;
+  gap: 1rem;
+  background-color: yellow;
+}
+#priority-span {
+  font-weight: bold;
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
 }

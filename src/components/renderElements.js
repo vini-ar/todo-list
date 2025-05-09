@@ -12,10 +12,10 @@ export function createDateContainer() {
     const dateContainer = elementFactory("div", "", { class: "userDateContainer"})
     dateContainer.innerHTML = ` 
             <div class="userDateButtons">
-                <button id="todayButton">Today</button>
-                <button id="tomorrowButton">Tomorrow</button>
-                <button id="thisWeekendButton">This weekend</button>
-                <button id="nextWeekButton">Next week</button>
+                <button class="setDateButton" id="todayButton" data-value="today">Today</button>
+                <button class="setDateButton" id="tomorrowButton" data-value="tomorrow">Tomorrow</button>
+                <button class="setDateButton" id="thisWeekendButton" data-value="weekend">This weekend</button>
+                <button class="setDateButton" id="nextWeekButton data-value="nextWeek">Next week</button>
             </div>
             <div class="userDateCalendar">
                 <span>Calendar</span>

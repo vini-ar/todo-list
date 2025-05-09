@@ -22,19 +22,28 @@ export function taskFormFactory() {
         }
     );
 
-    const divWrapper = elementFactory(
+    const spanContainer = elementFactory(
         "div",
         "",
         {
-            class: "divWrapperName"
+            class: "spanContainer"
         }
     )
 
     const spanDate = elementFactory(
-        "div",
+        "span",
         "",
         {
-            id: "date-span"
+            id: "task-date-span",
+            "data-value": ""
+        }
+    )
+    const spanPriority = elementFactory(
+        "span",
+        "", 
+        {
+            id: "task-priority-span",
+            "data-value": ""
         }
     )
 
@@ -161,7 +170,7 @@ export function taskFormFactory() {
     
 
     labelName.append(inputName)
-    divWrapper.append(spanDate, labelName)
+    spanContainer.append(spanDate, spanPriority)
 
     labelDescription.append(inputDescription)
 
@@ -170,7 +179,7 @@ export function taskFormFactory() {
     labelSelect.append(selectProject)
     
 
-    form.append(divWrapper, labelDescription, dateButton, priorityButton, labelSelect)
+    form.append(spanContainer, labelName,labelDescription, dateButton, priorityButton, labelSelect)
 
     formControlls.append(buttonCancel, buttonSubmit)
 

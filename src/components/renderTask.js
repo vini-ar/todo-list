@@ -8,7 +8,7 @@ export function renderTask(Task) {
         "div", 
         "", 
         { 
-            class: "task-list__item" 
+            class: "task-item" 
         }
     );
     
@@ -16,7 +16,7 @@ export function renderTask(Task) {
         "div", 
         "", 
         { 
-            class: "task-list__checkbox-wrapper" 
+            class: "task-item__checkbox-wrapper" 
         }
     );
 
@@ -24,7 +24,7 @@ export function renderTask(Task) {
         "input", 
         "", 
         { 
-            class: "task-list__checkbox-input", 
+            class: "task-item__checkbox-input", 
             type: "checkbox"
         } 
     );
@@ -33,7 +33,7 @@ export function renderTask(Task) {
         "div",
         "",
         { 
-            class: "task-list__info" 
+            class: "task-item__info" 
         }
     );
 
@@ -41,7 +41,7 @@ export function renderTask(Task) {
         "span",
         Task.name,
         { 
-            class: "task-list__name" 
+            class: "task-item__name" 
         }
     );
 
@@ -49,21 +49,21 @@ export function renderTask(Task) {
         "span",
         Task.description,
         { 
-            class: "task-list__description" 
+            class: "task-item__description" 
         }  
     );
 
-    const inputTaskDate = elementFactory(
-        "input",
-        "",
+    const spanTaskDate = elementFactory(
+        "span",
+        Task.deadline,
         { 
-            class: "task-list_-date", type: "date", value: Task.deadline 
+            class: "task-item__date"
         }
 
     );
 
     divCheckboxWrapper.append(checkbox)
-    divTaskWrapper.append(spanTaskName, spanTaskDescription, inputTaskDate)
+    divTaskWrapper.append(spanTaskName, spanTaskDescription, spanTaskDate)
 
     divContainer.append(divCheckboxWrapper, divTaskWrapper)
 

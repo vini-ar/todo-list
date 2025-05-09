@@ -1,6 +1,7 @@
 import { addNewTask } from './dataManager.js';
 import { getMontDayFormatString, getNextWeek, getToday, getTomorrow, getNextWeekendDay } from './dateManager.js';
 import { clearForm, placeElementAt, removeContainer, removeElementById, toggleButtonVisibility } from './domChanger.js';
+import { elementFactory } from './elementFactory.js';
 import { isValidForm } from './formValidations.js';
 import { getFormData } from './getFormData.js';
 import { createDateContainer, renderDateContainer, renderSidebar } from "./renderElements.js";
@@ -9,64 +10,67 @@ import { taskFormFactory } from "./taskFormFactory.js";
 
 
 
-function handleTodayButtonClick(dateContainer) {
-    const dateSpan = document.querySelector("#date-span")
-    const todayButton = document.querySelector("#todayButton")
+// function handleTodayButtonClick() {
+//     const dateSpan = document.querySelector("#task-date-span")
+//     const todayButton = document.querySelector("#todayButton")
+//     const dateContainer = document.querySelector(".userDateContainer")
 
-    console.log(dateContainer, dateSpan, todayButton)
+//     if (todayButton) {
+//         todayButton.onclick = () => {
+//             const todayDate = getToday()
+//             dateSpan.textContent = getMontDayFormatString(todayDate)
+//             dateContainer.remove() 
+//         }
+//     }
+// }
 
-    if (todayButton) {
-        todayButton.onclick = () => {
-            const todayDate = getToday()
-            dateSpan.textContent = getMontDayFormatString(todayDate)
-            dateContainer.remove() 
-        }
-    }
-}
+// function handleTomorrowButtonClick() {
+//     const dateSpan = document.querySelector("#task-date-span")
+//     const tomorrowButton = document.querySelector('#tomorrowButton')
+//     const dateContainer = document.querySelector(".userDateContainer")
 
-function handleTomorrowButtonClick() {
-    const dateSpan = document.querySelector("#date-span")
-    const tomorrowButton = document.querySelector('#tomorrowButton')
-    const dateContainer = document.querySelector(".userDateContainer")
+//     if (tomorrowButton) {
+//         tomorrowButton.onclick = () => {
+//             const tomorrowDate = getTomorrow()
+//             dateSpan.textContent = getMontDayFormatString(tomorrowDate)
+//             dateContainer.remove()
+//         }
 
-    if (tomorrowButton) {
-        tomorrowButton.onclick = () => {
-            const tomorrowDate = getTomorrow()
-            dateSpan.textContent = getMontDayFormatString(tomorrowDate)
-            dateContainer.remove()
-        }
+//     }
 
-    }
+// }
 
-}
+// function handleThisWeekendButtonClick() {
+//     const dateSpan = document.querySelector("#task-date-span")
+//     const thisWeekendButton = document.querySelector("#thisWeekendButton")
+//     const dateContainer = document.querySelector(".userDateContainer")
 
-function handleThisWeekendButtonClick() {
-    const dateSpan = document.querySelector("#date-span")
-    const thisWeekendButton = document.querySelector("#thisWeekendButton")
+//     if (thisWeekendButton) {
+//         thisWeekendButton.onclick = () => {
+//             const nextWeekendDate = getNextWeekendDay()
+//             dateSpan.textContent = getMontDayFormatString(nextWeekendDate)
+//             dateContainer.remove() 
+//         }
+//     }
 
-    if (thisWeekendButton) {
-        thisWeekendButton.onclick = () => {
-            const nextWeekendDate = getNextWeekendDay()
-            dateSpan.textContent = getMontDayFormatString(nextWeekendDate)
-            userDateContainer.remove() 
-        }
-    }
+// }
 
-}
+// function handleNextWeekButtonClick() {
+//     const dateSpan = document.querySelector("#task-date-span")
+//     const nextWeekButton = document.querySelector("#nextWeekButton")
+//     const dateContainer = document.querySelector(".userDateContainer")
 
-function handleNextWeekButtonClick() {
-    const dateSpan = document.querySelector("#date-span")
-    const nextWeekButton = document.querySelector("#nextWeekButton")
 
-    if (nextWeekButton) {
-        nextWeekButton.onclick = () => {
-            const nextWeek = getNextWeek()
-            dateSpan.textContent = getMontDayFormatString(nextWeek)   
-        }
+//     if (nextWeekButton) {
+//         nextWeekButton.onclick = () => {
+//             const nextWeek = getNextWeek()
+//             dateSpan.textContent = getMontDayFormatString(nextWeek) 
+//             dateContainer.remove()
+//         }
 
-    }
+//     }
 
-}
+// }
 
 export function handleFormCancelButtonClick() {
     return () => {
@@ -101,6 +105,52 @@ export function handleProjectContentAddTaskButtonClick() {
         }
     }
 }
+
+
+function bindDateButtonsClick() {
+    const setDateButtonNodeList = document.querySelectorAll(".setDateButton")
+    const dateContainer = document.querySelector(".userDateContainer")
+    const dateSpan = document.querySelector("#task-date-span")
+
+    for (let i = 0; i < 4; i++) {
+        const button = setDateButtonNodeList[i]
+        const dataValue = button.getAttribute("data-value")
+        let targetDay;
+        button.addEventListener("click", () => {   
+            if (dataValue === "today") {
+                targetDay = getToday()
+            }  
+            else if (dataValue === "tomorrow") {
+                targetDay = getTomorrow()
+            } 
+            else if (dataValue === "weekend") {
+                targetDay = getNextWeekendDay()
+            }
+            else {
+               targetDay = getNextWeek()
+            }
+            dateSpan.dataset.value = targetDay
+            dateSpan.textContent = getMontDayFormatString(targetDay)
+            dateContainer.remove()
+        })
+    }
+}   
+
+function bindPriorityButtonsClick() {
+    const allButtons = document.querySelectorAll(".priorityButton")
+    const prioritySpan = document.querySelector("#task-priority-span")
+    const priorityContainer = document.querySelector(".priorityContainer")
+    for(let i = 0; i < 4; i++) {
+        const button = allButtons[i]
+        button.addEventListener("click", () => {
+            prioritySpan.textContent = button.getAttribute("data-priority")
+            prioritySpan.dataset.priority = button.getAttribute("data-priority")
+            priorityContainer.remove()
+        })
+    }
+}
+
+
 export function handleContentTaskFormButtonsClick(formContainer) {
     const cancelButton = formContainer.querySelector(".task-add__cancel")
     const submitButton = formContainer.querySelector(".task-add__submit")
@@ -126,25 +176,40 @@ export function handleContentTaskFormButtonsClick(formContainer) {
         const taskItemDiv = renderTask(newTask)
         taskItemDiv.dataset.id = newTask.id
         taskList.append(taskItemDiv)
+        clearForm()
 
     })
 
-
-    dateButton?.addEventListener("click", (e) => {
-        const dateContainer = document.querySelector(".userDateContainer")
-        if (!dateContainer) {
-            const newDateContainer = createDateContainer()
-            placeElementAt(newDateContainer, e.clientX, e.clientY)
-            handleNextWeekButtonClick()
-            handleThisWeekendButtonClick()
-            handleTomorrowButtonClick()
-            handleTodayButtonClick(dateContainer)
-        }
-        
+    dateButton?.addEventListener("click", (e) => {   
+            if (document.querySelector(".userDateContainer")) {
+                return
+            }   
+            const dateContainer = createDateContainer()
+            placeElementAt(dateContainer, e.clientX, e.clientY)
+            bindDateButtonsClick()
     })
 
 
+priorityButton?.addEventListener("click", (e) => {
+    if (document.querySelector(".priorityContainer")) {
+        return
+    }
 
-    priorityButton?.addEventListener("click", () => formContainer.remove())
+    const priorityContainer = elementFactory("div", "", {class: "priorityContainer"})
+    placeElementAt(priorityContainer, e.clientX, e.clientY)
+    for (let i = 1; i < 5; i++) {
+        const button = elementFactory(
+            "button",
+            `Priority ${i}`,
+            {
+                id: `priority-p${i}`,
+                class: "priorityButton",
+                "data-priority": `p${i}`
+            }
+        )
+        priorityContainer.append(button)
+    }
+    bindPriorityButtonsClick()
+})
 
 }
