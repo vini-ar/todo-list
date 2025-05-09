@@ -1,4 +1,4 @@
-import { addNewTask } from './dataManager.js';
+import { addNewTask } from './taskManager.js';
 import { getMontDayFormatString, getNextWeek, getToday, getTomorrow, getNextWeekendDay } from './dateManager.js';
 import { clearForm, placeElementAt, removeContainer, removeElementById, toggleButtonVisibility } from './domChanger.js';
 import { elementFactory } from './elementFactory.js';
@@ -9,82 +9,10 @@ import { renderTask } from './renderTask.js';
 import { taskFormFactory } from "./taskFormFactory.js";
 
 
-
-// function handleTodayButtonClick() {
-//     const dateSpan = document.querySelector("#task-date-span")
-//     const todayButton = document.querySelector("#todayButton")
-//     const dateContainer = document.querySelector(".userDateContainer")
-
-//     if (todayButton) {
-//         todayButton.onclick = () => {
-//             const todayDate = getToday()
-//             dateSpan.textContent = getMontDayFormatString(todayDate)
-//             dateContainer.remove() 
-//         }
-//     }
-// }
-
-// function handleTomorrowButtonClick() {
-//     const dateSpan = document.querySelector("#task-date-span")
-//     const tomorrowButton = document.querySelector('#tomorrowButton')
-//     const dateContainer = document.querySelector(".userDateContainer")
-
-//     if (tomorrowButton) {
-//         tomorrowButton.onclick = () => {
-//             const tomorrowDate = getTomorrow()
-//             dateSpan.textContent = getMontDayFormatString(tomorrowDate)
-//             dateContainer.remove()
-//         }
-
-//     }
-
-// }
-
-// function handleThisWeekendButtonClick() {
-//     const dateSpan = document.querySelector("#task-date-span")
-//     const thisWeekendButton = document.querySelector("#thisWeekendButton")
-//     const dateContainer = document.querySelector(".userDateContainer")
-
-//     if (thisWeekendButton) {
-//         thisWeekendButton.onclick = () => {
-//             const nextWeekendDate = getNextWeekendDay()
-//             dateSpan.textContent = getMontDayFormatString(nextWeekendDate)
-//             dateContainer.remove() 
-//         }
-//     }
-
-// }
-
-// function handleNextWeekButtonClick() {
-//     const dateSpan = document.querySelector("#task-date-span")
-//     const nextWeekButton = document.querySelector("#nextWeekButton")
-//     const dateContainer = document.querySelector(".userDateContainer")
-
-
-//     if (nextWeekButton) {
-//         nextWeekButton.onclick = () => {
-//             const nextWeek = getNextWeek()
-//             dateSpan.textContent = getMontDayFormatString(nextWeek) 
-//             dateContainer.remove()
-//         }
-
-//     }
-
-// }
-
 export function handleFormCancelButtonClick() {
     return () => {
         
         removeElementById("task-add-form-container")
-    }
-}
-
-export function handleContentAddTaskSubmitButtonClick() {
-    return () => {
-        //get form data
-        //create obj
-        //clearForm
-        clearForm()
     }
 }
 
@@ -190,7 +118,7 @@ export function handleContentTaskFormButtonsClick(formContainer) {
     })
 
 
-priorityButton?.addEventListener("click", (e) => {
+    priorityButton?.addEventListener("click", (e) => {
     if (document.querySelector(".priorityContainer")) {
         return
     }
@@ -210,6 +138,16 @@ priorityButton?.addEventListener("click", (e) => {
         priorityContainer.append(button)
     }
     bindPriorityButtonsClick()
-})
+    })
 
+}
+
+export function handleEventListenerTaskItem(taskItemDiv) {
+    const checkboxRadio = taskItemDiv.querySelector(".task-item__checkbox-input")
+    const taskId = taskItemDiv.dataset.id
+
+    checkboxRadio.onclick = () => {
+        console.log(taskId)
+        taskItemDiv.remove()
+    }
 }

@@ -5,7 +5,7 @@ export function getFormData(formContainer) {
     const taskNameInput = formContainer.querySelector("#task-name-input")
     const taskDescriptionInput = formContainer.querySelector("#task-description-input")
     const taskDateSpan = formContainer?.querySelector("#task-date-span")
-    const taskPrioritySpan = formContainer?.querySelector("task-priority-span")
+    const taskPrioritySpan = formContainer?.querySelector("#task-priority-span")
     const taskProjectSelect = formContainer.querySelector("#task-add__project-select")
 
     const taskName = taskNameInput.value
@@ -13,6 +13,8 @@ export function getFormData(formContainer) {
     const taskDate = taskDateSpan.textContent
     const taskPriority = taskPrioritySpan.textContent
     const taskProject = taskProjectSelect.value
+
+    const taskHour = ""
     
 
     

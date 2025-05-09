@@ -1,11 +1,9 @@
-import { addNewTask, userTasksDatabase } from "./dataManager"
+import { addNewTask, userTasksDatabase } from "./taskManager"
 import { toggleButtonVisibility, toggleElementVisibility } from "./domChanger"
 import { elementFactory } from "./elementFactory"
-import { handleContentAddTaskSubmitButtonClick, handleContentTaskFormButtonsClick, handleDateButtonClick, handleFormCancelButtonClick, handleTaskFormButtonsClick } from "./eventListenerHandler"
-import { handleEventListenerTaskItem } from "./handleEventListenerTaskItem"
+import { handleContentAddTaskSubmitButtonClick, handleContentTaskFormButtonsClick, handleDateButtonClick, handleEventListenerTaskItem, handleFormCancelButtonClick, handleTaskFormButtonsClick } from "./eventListenerHandler"
 import { renderTask } from "./renderTask"
 import { taskFormFactory } from "./taskFormFactory"
-
 
 
 export function createDateContainer() { 

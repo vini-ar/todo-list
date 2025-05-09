@@ -1,9 +1,6 @@
 import { elementFactory } from "./elementFactory"
-import { allProjects } from "../pages/inbox";
 
 export function taskFormFactory() {
-    const parentElement = document.querySelector(".task-add")
-
     const container = elementFactory(
         "div",
         "",

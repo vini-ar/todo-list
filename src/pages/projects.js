@@ -1,6 +1,4 @@
 import '../styles/styles.css'
-import { displaySidebar } from '../components/displaySidebar'
-import { handleAddTaskSideBarButtonClick } from '../components/handleAddTaskSideBarButtonClick'
 import { getColors, getUserProjecstLength, getUserProjectsList } from '../components/projectManager'
 import { elementFactory } from '../components/elementFactory'
 
