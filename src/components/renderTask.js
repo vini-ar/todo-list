@@ -66,6 +66,7 @@ export function renderTask(Task) {
     divTaskWrapper.append(spanTaskName, spanTaskDescription, spanTaskDate)
 
     divContainer.append(divCheckboxWrapper, divTaskWrapper)
+    divContainer.dataset.taskId = Task.id
 
     return divContainer
 }

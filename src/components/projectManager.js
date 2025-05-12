@@ -1,7 +1,7 @@
 let userProjects = []
 let colors = ["red", "yellow", "black"]
 
-export function userProjectObjectFactory(name="", color="", parentProject="") {
+export function projectObjectFactory(name="", color="", parentProject="") {
     if (!name) {
         return alert("You cannot create an project Without Name")
     }
@@ -13,6 +13,7 @@ export function userProjectObjectFactory(name="", color="", parentProject="") {
     }
 
     return {
+        id: "id" + Math.random().toString(16).slice(2),
         name: name,
         color: color,
         parentProject: parentProject,

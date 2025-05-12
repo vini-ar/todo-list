@@ -1,9 +1,11 @@
 import { addNewTask, userTasksDatabase } from "./taskManager"
-import { toggleButtonVisibility, toggleElementVisibility } from "./domChanger"
 import { elementFactory } from "./elementFactory"
-import { handleContentAddTaskSubmitButtonClick, handleContentTaskFormButtonsClick, handleDateButtonClick, handleEventListenerTaskItem, handleFormCancelButtonClick, handleTaskFormButtonsClick } from "./eventListenerHandler"
+import { attachFormActionListeners, attachTaskFormActionListeners, handleEventListenerTaskItem } from "./taskAttachEventListener"
 import { renderTask } from "./renderTask"
 import { taskFormFactory } from "./taskFormFactory"
+import { addProject, getColors, getUserProjecstLength, getUserProjectsList, projectObjectFactory, userProjectObjectFactory } from "./projectManager"
+import { taskFactory } from "./taskFactory"
+import { attachProjectFormActionListeners } from "./projectAttachEventListener"
 
 
 export function createDateContainer() { 
@@ -21,7 +23,6 @@ export function createDateContainer() {
             <div class="userHour">
                 <button id="timeButton">Time</button>
             </div>
-    
     `
     return dateContainer
 }
@@ -38,51 +39,28 @@ export function renderSidebar() {
         <div class="sidebar__projects">
             <div class="sidebar__projects">
                 <a href="/projects.html">My Projects</a>
-                <button class="sidebar__projects sidebar__projects--add-project">+</button>
+                <button id="sidebarCreateProjectButton" class="sidebar__projects sidebar__projects--add-project">+</button>
             </div>
         </div>
     </div>`
 }
 
-export function renderProjectContentTemplate() {
-    const content = document.querySelector("#content")
-    content.innerHTML =  `           
-    <div class="header">
-        <h1 class="task-list__project-name">Inbox</h1>
-        </div>
-        <div class="task-list"></div>  
-        <button id='create-task-add-form' class="task-add__display-button">
-            Add new task
-        </button>
-        <div class="task-add"></div>
-`
-}
 
 export function renderSidebarAddTaskFormContainer() {
         const formContainer = taskFormFactory()
         formContainer.setAttribute("id", "floating-task-add-container")
         content.append(formContainer)
-    
-    
-        const cancelButton = formContainer.querySelector(".task-add__cancel")
-        const submitButton = formContainer.querySelector(".task-add__submit")
-        const addTaskButton = document.querySelector("#create-task-add-form")
 
-        if (cancelButton) {
-            cancelButton.addEventListener("click", () => {
-                addTaskButton.style.display = "flex"
-            })
-        }
-    
-        cancelButton.addEventListener("click", () => formContainer.remove())
-        submitButton.addEventListener("click", () => formContainer.remove())
+        attachTaskFormActionListeners(formContainer)
         
 }
 
 export function renderContentAddTaskFormContainer() {
     const formContainer = taskFormFactory()
-    content.append(formContainer)
-    handleContentTaskFormButtonsClick(formContainer)
+    formContainer.setAttribute("id", "task-add-form-container")
+    document.querySelector(".task-add").append(formContainer)
+    
+    attachTaskFormActionListeners(formContainer)
     
 }
 
@@ -93,8 +71,109 @@ export function renderUserTask() {
         inboxTasks.forEach((Task) =>  {
             const taskItemDiv = renderTask(Task)
             taskItemDiv.dataset.id = Task.id
-            handleEventListenerTaskItem(taskItemDiv)
+            // handleEventListenerTaskItem(taskItemDiv)
             taskList.append(taskItemDiv)
         })
     }
+}
+
+export function renderAddProjectForm(formContainer) {
+    formContainer.innerHTML = `
+    <form class="projectForm" id="newProjectForm">
+        <label for="projectNameInput"> Name:
+            <input type="text" name="projectName" id="projectNameInput">
+        </label>
+        <label for="projectColorSelect"> Color:
+                <select id="projectColorSelect" name="projectColors"></select>
+        </label>
+        <label for="projectParentSelect"> Parent project:
+            <select name="projectParents" id="projectParentSelect"></select>
+        </label>
+    </form>
+    <div class="form-controlls">
+        <button class="projectFormCancelButton" type='button'>Cancel</button>
+        <button class="projectFormSubmitButton" type='submit'>Submit</button>
+    </div>
+                
+    `
+    formContainer.classList.toggle("hide")
+    renderProjectColorOptions(formContainer)
+    renderParentProjectOptions(formContainer)
+    attachProjectFormActionListeners(formContainer)
+
+}
+
+function renderProjectColorOptions(formContainer) {
+    const projectColorSelect = formContainer.querySelector("#projectColorSelect")
+    const colors = getColors()
+    colors.forEach((color) => {
+        const colorOption = elementFactory(
+            "option",
+            color,
+            {
+                value: color
+            }
+        )
+        projectColorSelect.append(colorOption)
+    })
+
+}
+
+function renderParentProjectOptions(formContainer) {
+    const projectParentSelect = formContainer.querySelector("#projectParentSelect")
+    const userProjects = getUserProjectsList()
+    const userProjectsLength = getUserProjecstLength()
+
+    if (userProjectsLength !== 0) {
+        userProjects.forEach((project) => {
+            const projectOption = elementFactory(
+                "option",
+                project,
+                {
+                    value: project
+                }
+            )
+            projectParentSelect.append(projectOption)
+        })
+    }
+
+    const projectParentDefaultOption = elementFactory(
+        "option",
+        "No parent",
+        {
+            value: "No parent",
+            selected: "selected"
+        }
+    )
+
+    projectParentSelect.append(projectParentDefaultOption)
+    
+}
+
+
+export function renderProjectItem(Project) {
+    const projectList = document.querySelector(".project__list")
+
+    const projectItemContainer = elementFactory(
+        "div",
+        "",
+        {
+            class: "projectItemContainer"            
+        }
+
+    )
+
+    const projectItemButton = elementFactory(
+        "button",
+        Project.name,
+        {
+            class: "projecItemButton",
+            "data-id": Project.id,
+            style: "color: " + Project.color,
+        }
+    )
+
+    projectItemContainer.append(projectItemButton)
+
+    return projectItemContainer
 }

@@ -6,7 +6,7 @@ export function taskFormFactory() {
         "",
         { 
             class: "task-add__form-container",
-            id: "task-add-form-container"
+            id: ""
         }
     );
     

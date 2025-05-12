@@ -25,11 +25,12 @@ export function toggleButtonVisibility(button) {
     }
 }
 
-export function placeElementAt(el, positionX, positionY) {
+export function placeElementAt(el, x, y) {
     const content = document.querySelector("#content")
-    content.append(el)
+    el.style.position = "absolute"
+    el.style.top = `${y}px`
+    el.style.left = `${x}px`
+    el.style.zIndex = 9999
     
-    el.style.position = "absolute";
-    el.style.left = `${positionX}px`
-    el.style.top = `${positionY}px`
+    content.append(el)
 }

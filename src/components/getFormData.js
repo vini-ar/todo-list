@@ -15,10 +15,7 @@ export function getFormData(formContainer) {
     const taskProject = taskProjectSelect.value
 
     const taskHour = ""
-    
-
-    
-   
+       
     
     return taskFactory(taskName, taskDescription, taskDate, taskHour, taskProject, taskPriority)
 

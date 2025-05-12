@@ -8,11 +8,10 @@ createIcons({ icons });
 
 function renderProjectPage() {
     renderSidebar()
-    renderProjectContentTemplate()
     renderUserTask()
 }
 
-function handleEventListenerProjectPage() {
+function handleEventListenerTaskPage() {
 
     const sidebarAddTaskButton = document.querySelector(".sidebar__control--add-task")
     const contentAddTaskButton = document.querySelector(".task-add__display-button")
@@ -27,4 +26,4 @@ function handleEventListenerProjectPage() {
 }
 
 renderProjectPage()
-handleEventListenerProjectPage()
+handleEventListenerTaskPage()

@@ -7,50 +7,26 @@
 </head>
 <body>
     <div class="container">
-        <div id='sidebar'>
-            <div class="sidebar__controls">
-                <button class="sidebar__control sidebar__control--add-task">Add Task</button>
-                <button class="sidebar__control sidebar__control--inbox">Inbox</button>
-           </div>
-            <div class="sidebar__projects">
-                <button class="sidebar__project sidebar__projects--create-project-button">My Projects</button>
-            </div>
-        </div>
+        <div id='sidebar'> </div>
         <div id="content">
             <div class="project">
                 <div class="form-container">
                     <div>
                         <h3>Add Project</h3>
                     </div>
-                    <!-- <form id="newProjectForm" action="/submit" method="POST">
-                        <label for="projectName">
-                            <input type="text" name="projectName" id="projectNameInput">
-                        </label>
-                        <select name="projectColor">
-                        </select>
-                        <select name="projectParent" id="projectParentSelect"></select>
-                    </form>
-                    <div class="form-controlls">
-                        <button class="cancelButton">Cancel</button>
-                        <button class="submitButton"type='submit' form="newProjectForm">Submit</button>
-                    </div>
-                 -->
-
+                    
                 <h1 class="project__title">My Projects</h1>
                 <div class="project__create">
-                    <button class="project__create-button">Create New Project</button>
+                    <button id="contentCreateProjectButton" class="project__create-button">Create New Project</button>
                 </div>
                 <div class="project__counter">
                     <span class="project__counter-span">1 Project</span>
                 </div>
-                <div class="project__list">
-                    <div class="project__item">
-                        <span>Project Name</span>
-                    </div>
-                </div>
+                <div class="project__list"></div>
             </div>
         </div>
-        <div class="formContainer"></div>
+        <div class="projectFormContainer hide" id="projectContentFormContainer"></div>
+        <div class="projectFormContainer hide" id="projectSidebarFormContainer"></div>
     </div>
 </body>
 </html>
