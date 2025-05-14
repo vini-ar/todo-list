@@ -8,7 +8,8 @@ export function renderTask(Task) {
         "div", 
         "", 
         { 
-            class: "task-item" 
+            class: "task-item",
+            "data-task-id": Task.id
         }
     );
     

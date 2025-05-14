@@ -6,24 +6,27 @@ import { hiddeButton, toggleButtonVisibility, toggleElementVisibility } from '..
 
 createIcons({ icons });
 
-function renderProjectPage() {
-    renderSidebar()
-    renderUserTask()
+
+
+const initUI = {
+    start() {
+        renderSidebar();
+        renderUserTask();
+        this.getDOM()
+        this.attachEventListener()
+    },
+    getDOM() {
+        this.sidebarAddTaskButton = document.querySelector(".sidebar__control--add-task")
+        this.contentAddTaskButton = document.querySelector(".task-add__display-button")
+    },
+    attachEventListener() {
+        this.sidebarAddTaskButton.addEventListener("click", () => renderSidebarAddTaskFormContainer())
+        this.contentAddTaskButton.addEventListener("click", (e) => {
+            toggleButtonVisibility(e.target)
+            renderContentAddTaskFormContainer()
+        })
+    }
+
 }
 
-function handleEventListenerTaskPage() {
-
-    const sidebarAddTaskButton = document.querySelector(".sidebar__control--add-task")
-    const contentAddTaskButton = document.querySelector(".task-add__display-button")
-
-
-    sidebarAddTaskButton.addEventListener("click", renderSidebarAddTaskFormContainer)
-    contentAddTaskButton.addEventListener("click", (e) => {
-        toggleButtonVisibility(e.target)
-        renderContentAddTaskFormContainer()
-    })
-
-}
-
-renderProjectPage()
-handleEventListenerTaskPage()
+initUI.start()

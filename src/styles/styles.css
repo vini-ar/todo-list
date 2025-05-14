@@ -173,10 +173,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .task-item {
+  cursor: pointer;
   display: flex;
   flex-direction: row;
+  height: 100%;
+  height: 100%;
+  border: none;
   gap: 0.5rem;
-  padding: 1rem 0;
+  height: max-content;
+  background-color: inherit;
   border-bottom: 1px solid var(--main-gray-strong);
 }
 .task-item__checkbox-input {
@@ -305,4 +310,27 @@ h1, h2, h3, h4, h5, h6 {
 
 #projectSidebarFormContainer {
   border: 1px solid black;
+}
+
+#task-update-page {
+  z-index: 9999;
+  margin: auto;
+  position: absolute;
+  top: 100px;
+  left: 400px;
+  border: 1px solid black;
+  height: 400px;
+  width: 400px;
+  background-color: var(--main-gray-strong);
+  pointer-events: auto;
+}
+
+#task-name-update {
+  font-size: 1rem;
+  font-weight: bolder;
+}
+#update-task-container {
+  z-index: 1;
+  position: relative;
+  pointer-events: auto;
 }

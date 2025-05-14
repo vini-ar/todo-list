@@ -1,14 +1,15 @@
-import { addNewTask } from './taskManager.js';
+import { addNewTask, taskManager } from './taskManager.js';
 import { getMontDayFormatString, getNextWeek, getToday, getTomorrow, getNextWeekendDay } from './dateManager.js';
 import { clearForm, placeElementAt, removeContainer, removeElementById, toggleButtonVisibility } from './domChanger.js';
 import { elementFactory } from './elementFactory.js';
 import { isValidForm } from './formValidations.js';
 import { getFormData } from './getFormData.js';
-import { createDateContainer } from "./renderElements.js";
+import { createDateContainer, renderTaskPage } from "./renderElements.js";
 import { renderTask } from './renderTask.js';
 import { taskFormFactory } from "./taskFormFactory.js";
 import { setDate } from 'date-fns';
 import { bindDateButtonsClick, handleSetDateButtonClick, handleSetPriorityButtonClick, handleTaskFormCancelButton, handleTaskFormCancelButtonClick, handleTaskFormDateButtonClick, handleTaskFormPriorityButtonClick, handleTaskFormSubmitButtonClick } from './taskFormHandleActions.js';
+import { handleTaskItemCheckboxClick } from './taskItemHandleActions.js';
 
 //Attach > colocar event listenr
 //handle > codigo
@@ -85,4 +86,14 @@ export function attachSetPriorityActionListeners() {
         const button = allButtons[i]
         button.addEventListener("click", () => handleSetPriorityButtonClick(button))
     }
+}
+
+
+export function attachTaskItemActionListeners(taskItemDiv) {
+    const taskItemInfoDiv = taskItemDiv.querySelector(".task-item__info")
+    const taskItemcheckbox = taskItemDiv.querySelector(".task-item__checkbox-input")
+
+    taskItemInfoDiv?.addEventListener("click", (e) => renderTaskPage(e.target))
+    taskItemcheckbox?.addEventListener("click", (e) => handleTaskItemCheckboxClick(e.target))
+
 }

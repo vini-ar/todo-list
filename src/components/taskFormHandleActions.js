@@ -3,10 +3,10 @@ import { clearForm, placeElementAt, toggleButtonVisibility } from "./domChanger"
 import { elementFactory } from "./elementFactory"
 import { isValidForm } from "./formValidations"
 import { getFormData } from "./getFormData"
-import { createDateContainer } from "./renderElements"
+import { createDateContainer, renderTaskPage } from "./renderElements"
 import { renderTask } from "./renderTask"
-import { attachSetDateButtonsActionListeners, attachSetPriorityActionListeners } from "./taskAttachEventListener"
-import { addNewTask } from "./taskManager"
+import { attachSetDateButtonsActionListeners, attachSetPriorityActionListeners, attachTaskItemActionListeners } from "./taskAttachEventListener"
+import { addNewTask, addTaskToArchive, displayAllTasks, findTaskById, removeTaskById, showAllTasks, showAllTasksArray, showTaskArchive, showTasks, taskManager, updateTaskProject, updateTasksArray } from "./taskManager"
 
 export function handleTaskFormCancelButtonClick(formContainer) {
     //Can be everything in one logic improve later
@@ -18,23 +18,27 @@ export function handleTaskFormCancelButtonClick(formContainer) {
 }
 
 
-export function handleTaskFormSubmitButtonClick(formContainer) {
+export function handleTaskFormSubmitButtonClick(button) {
         if (!isValidForm()) {
             return alert("Task name empty")
         }
-        const newTask = getFormData(formContainer)
-        addNewTask(newTask)
-
-        if (formContainer.id !== "task-add-form-container") {
-            return formContainer.remove()    
+        const form = button.closest(".task-add__form-container")
+        const newTask = getFormData(form)
+        taskManager.addTask(newTask)
+        
+        if (form.id !== "task-add-form-container") {
+            return form.remove()    
         }
-        //renderTaskItem
+
         const taskList = document.querySelector(".task-list")
         const taskItemDiv = renderTask(newTask)
+
+        attachTaskItemActionListeners(taskItemDiv)
+
         taskList.append(taskItemDiv)
-        
         clearForm()
 }
+
 export function handleSetDateButtonClick(dateValue) {
     const dateContainer = document.querySelector(".userDateContainer")
     const dateSpan = document.querySelector("#task-date-span")

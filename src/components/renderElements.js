@@ -1,4 +1,4 @@
-import { addNewTask, userTasksDatabase } from "./taskManager"
+import { addNewTask, findTaskById, taskManager, userTasksDatabase } from "./taskManager"
 import { elementFactory } from "./elementFactory"
 import { attachFormActionListeners, attachTaskFormActionListeners, handleEventListenerTaskItem } from "./taskAttachEventListener"
 import { renderTask } from "./renderTask"
@@ -151,9 +151,7 @@ function renderParentProjectOptions(formContainer) {
 }
 
 
-export function renderProjectItem(Project) {
-    const projectList = document.querySelector(".project__list")
-
+export function renderProjectItem() {
     const projectItemContainer = elementFactory(
         "div",
         "",
@@ -170,10 +168,73 @@ export function renderProjectItem(Project) {
             class: "projecItemButton",
             "data-id": Project.id,
             style: "color: " + Project.color,
+            "data-project-id": Project.id
         }
     )
 
     projectItemContainer.append(projectItemButton)
 
     return projectItemContainer
+}
+
+function getTaskItemId(button) {
+    const taskItemDiv = button.closest(".task-item")
+
+    if (!taskItemDiv.classList.contains("task-item")) {
+        return console.log("you didndt click right")
+    }
+
+    return taskItemDiv.getAttribute("data-task-id")
+}
+
+export function renderTaskPage(button) {
+    const taskId = getTaskItemId(button)
+    const Task = taskManager.getTaskById(taskId)
+
+    const taskUpdatePageContainer = document.querySelector(".task-update-page-container")
+    const taskUpdatePage = elementFactory(
+        "div", 
+        "teste", 
+        {
+            id: "task-update-page",
+            "data-task-id": Task.id
+        }
+    )
+    taskUpdatePage.innerHTML = 
+    `<div class="controlls">
+        <button id='updateTaskQuitButton' class=''>Quit</button>
+    </div>
+    <div>
+        <div class='task-info-container'>
+                <div id='task-name-update'>Name: ${Task.name}</div>
+                <div id='task-description-update'>Description: ${Task.description}</div>
+            <div class='task-info task-date-update'>Deadline: ${Task.deadline}</div>
+            <div class='task-info task-priority-update'>Priority: ${Task.priority}</div>
+        </div>
+    </div>
+    `
+    const updateTaskQuitButton = taskUpdatePage.querySelector("#updateTaskQuitButton")
+    updateTaskQuitButton.addEventListener("click", (e) => {
+        const container = e.target.closest("#task-update-page")
+        container.remove()
+    })
+    
+    const updateNameContainer = taskUpdatePage.querySelector("#task-name-update")
+    updateNameContainer.addEventListener("click", () => {
+        updateNameContainer.innerHTML = ""
+        const updateInput = elementFactory(
+            "input",
+            "",
+            {
+                type: "text",
+                id: "update-task-input",
+            }
+        )
+        updateNameContainer.append(updateInput)
+        updateInput.focus()
+    })
+
+
+
+    taskUpdatePageContainer.append(taskUpdatePage)
 }

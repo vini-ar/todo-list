@@ -128,17 +128,7 @@ export function taskFormFactory() {
             value: "inbox"
         }
     )
-
-    // allProjects.forEach((project) =>
-    //     selectProject.append(elementFactory(
-    //         "option",
-    //         project,
-    //         {
-    //             value: project
-    //         }
-    //     ))
-    // )
-
+    
     const formControlls = elementFactory(
         "div",
         "",
