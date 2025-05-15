@@ -76,7 +76,7 @@ export function attachSetDateButtonsActionListeners() {
     for (let i = 0; i < 4; i++) {
         const button = setDateButtonNodeList[i]
         const dateValue = button.getAttribute("data-value")
-        button.addEventListener("click", () => handleSetDateButtonClick(dateValue))   
+        button.addEventListener("click", (e) => handleSetDateButtonClick(e, dateValue))   
     } 
 }
 

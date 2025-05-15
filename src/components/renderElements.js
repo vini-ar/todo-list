@@ -1,11 +1,12 @@
 import { addNewTask, findTaskById, taskManager, userTasksDatabase } from "./taskManager"
 import { elementFactory } from "./elementFactory"
-import { attachFormActionListeners, attachTaskFormActionListeners, handleEventListenerTaskItem } from "./taskAttachEventListener"
+import { attachFormActionListeners, attachSetDateButtonsActionListeners, attachTaskFormActionListeners, handleEventListenerTaskItem } from "./taskAttachEventListener"
 import { renderTask } from "./renderTask"
 import { taskFormFactory } from "./taskFormFactory"
 import { addProject, getColors, getUserProjecstLength, getUserProjectsList, projectObjectFactory, userProjectObjectFactory } from "./projectManager"
 import { taskFactory } from "./taskFactory"
 import { attachProjectFormActionListeners } from "./projectAttachEventListener"
+import { handleTaskFormDateButtonClick } from "./taskFormHandleActions"
 
 
 export function createDateContainer() { 
@@ -206,22 +207,33 @@ export function renderTaskPage(button) {
     </div>
     <div>
         <div class='task-info-container'>
-                <div id='task-name-update'>Name: ${Task.name}</div>
-                <div id='task-description-update'>Description: ${Task.description}</div>
-            <div class='task-info task-date-update'>Deadline: ${Task.deadline}</div>
-            <div class='task-info task-priority-update'>Priority: ${Task.priority}</div>
+            <div id='task-name-update'>Name: ${Task.name}</div>
+            <div id='task-description-update'>Description: ${Task.description}</div>
+            <div id='task-date-update' class='task-info task-date-update'>Deadline: ${Task.deadline}</div>
+            <div id='task-priority-update' class='task-info task-priority-update'>Priority: ${Task.priority}</div>
         </div>
     </div>
     `
     const updateTaskQuitButton = taskUpdatePage.querySelector("#updateTaskQuitButton")
     updateTaskQuitButton.addEventListener("click", (e) => {
         const container = e.target.closest("#task-update-page")
+        const taskItem = document.querySelector(`.task-item[data-task-id=${Task.id} ]`)
+        const taskItemName = taskItem.querySelector(".task-item__name")
+        const taskItemDecription = taskItem.querySelector(".task-item__description")
+        if (taskItemDecription) {
+            taskItemDecription.textContent = taskManager.getTaskDescription(Task.id)
+        }
+
+        taskItemName.textContent = taskManager.getTaskName(Task.id)
+        
         container.remove()
     })
     
-    const updateNameContainer = taskUpdatePage.querySelector("#task-name-update")
-    updateNameContainer.addEventListener("click", () => {
-        updateNameContainer.innerHTML = ""
+    const updateNameDiv = taskUpdatePage.querySelector("#task-name-update")
+    updateNameDiv.addEventListener("click", () => {
+        if (updateNameDiv.querySelector("#update-task-input")) {
+            return console.error("You cannot create two containers")
+        }
         const updateInput = elementFactory(
             "input",
             "",
@@ -230,8 +242,72 @@ export function renderTaskPage(button) {
                 id: "update-task-input",
             }
         )
-        updateNameContainer.append(updateInput)
+        const updateButton = elementFactory(
+            "button",
+            "Save",
+            {
+                type: "button",
+                id: "update-button-name"
+            }
+
+        )
+        updateButton.addEventListener("click", (e) => {
+            e.stopPropagation()
+            const updadateTaskInput = updateNameDiv.querySelector("#update-task-input")
+            const newTaskName = updadateTaskInput.value
+            taskManager.updateTaskName(taskId, newTaskName)
+            updateInput.remove()
+            updateButton.remove()
+            const updateTaskNameDiv = taskUpdatePage.querySelector("#task-name-update")
+            updateTaskNameDiv.textContent = "Name: " + newTaskName
+        })
+        updateNameDiv.append(updateInput, updateButton)
         updateInput.focus()
+    })
+
+    const updateDescriptionDiv = taskUpdatePage.querySelector("#task-description-update")
+    updateDescriptionDiv.addEventListener("click", () => {
+        if (updateDescriptionDiv.querySelector("#update-task-description-input")) {
+            return
+        }
+
+        const inputDescription = elementFactory(
+            "input",
+            "",
+            {
+                id: "update-task-description-input"
+            }
+
+        )
+        const updateDescriptionButton = elementFactory(
+            "button",
+            "Save",
+            {
+                id: "update-task-description-button"
+            }
+        )
+
+        updateDescriptionButton.addEventListener("click", (e) => {
+            e.stopPropagation()
+            if (updateDescriptionDiv) {
+                taskManager.updateTaskDescription(Task.id ,inputDescription.value)
+                updateDescriptionDiv.textContent = "Description: " + taskManager.getTaskDescription(Task.id)
+            }
+            inputDescription.remove()
+            updateDescriptionButton.remove()
+        })
+
+        updateDescriptionDiv.append(inputDescription, updateDescriptionButton)
+    })
+
+    const updateDateDiv = taskUpdatePage.querySelector("#task-date-update")
+    updateDateDiv.addEventListener("click", (e) => {
+        e.stopPropagation()
+        if (updateDateDiv.querySelector("#update-task-description-button")) {
+            return
+        }
+        handleTaskFormDateButtonClick(e)
+        
     })
 
 

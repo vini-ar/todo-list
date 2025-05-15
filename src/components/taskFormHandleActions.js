@@ -39,11 +39,20 @@ export function handleTaskFormSubmitButtonClick(button) {
         clearForm()
 }
 
-export function handleSetDateButtonClick(dateValue) {
-    const dateContainer = document.querySelector(".userDateContainer")
-    const dateSpan = document.querySelector("#task-date-span")
-    let targetDay;
+export function handleSetDateButtonClick(e, dateValue) {
+    e.stopPropagation()
+    const dateContainer = e.target.closest(".userDateContainer")
+
+    let targetElement;
+    if (e.target.closest("#task-date-update")) {
+        targetElement = e.target.closest("#task-date-update")
+    }
+    else {
+        targetElement = document.querySelector("#task-date-span")
+    }
     
+    let targetDay;
+
     if (dateValue === "today") {
         targetDay = getToday()
     }  
@@ -56,21 +65,28 @@ export function handleSetDateButtonClick(dateValue) {
     else {
         targetDay = getNextWeek()
     }
-    dateSpan.dataset.value = targetDay
-    dateSpan.textContent = getMontDayFormatString(targetDay)
+    targetElement.dataset.value = targetDay
+    targetElement.textContent = getMontDayFormatString(targetDay)
     dateContainer.remove()
 }
 
 
 export function handleTaskFormDateButtonClick(e) {
+        e.stopPropagation()
         const dateContainer = document.querySelector(".userDateContainer")
+        const taskDateUpdate = e.target?.closest("#task-date-update")
         if (dateContainer) {
             return dateContainer.remove()
         }
         const newDateContainer = createDateContainer()
         const buttonCoordinates = e.target.getBoundingClientRect()
-        placeElementAt(newDateContainer, buttonCoordinates.x, buttonCoordinates.y)
-        attachSetDateButtonsActionListeners()
+    
+        if (taskDateUpdate) {
+            taskDateUpdate.append(newDateContainer)
+        } else {
+            placeElementAt(newDateContainer, buttonCoordinates.x, buttonCoordinates.y)
+        }
+        attachSetDateButtonsActionListeners(e)
 }
 
 export function handleSetPriorityButtonClick(button) {
