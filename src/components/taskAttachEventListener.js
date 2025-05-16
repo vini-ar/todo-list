@@ -11,50 +11,6 @@ import { setDate } from 'date-fns';
 import { bindDateButtonsClick, handleSetDateButtonClick, handleSetPriorityButtonClick, handleTaskFormCancelButton, handleTaskFormCancelButtonClick, handleTaskFormDateButtonClick, handleTaskFormPriorityButtonClick, handleTaskFormSubmitButtonClick } from './taskFormHandleActions.js';
 import { handleTaskItemCheckboxClick } from './taskItemHandleActions.js';
 
-//Attach > colocar event listenr
-//handle > codigo
-
-// export function attachTaskFormActionListeners(formContainer) {
-//     const cancelButton = formContainer.querySelector(".task-add__cancel")
-//     const submitButton = formContainer.querySelector(".task-add__submit")
-//     const dateButton = formContainer.querySelector("#displayDateContainerButton")
-//     const priorityButton = formContainer.querySelector("#priorityButton")
-//     const addTaskButton = document.querySelector("#create-task-add-form")
-//     const taskList = document.querySelector(".task-list")
-
-//     cancelButton?.addEventListener("click", (e) => {
-//         formContainer.remove()
-//         toggleButtonVisibility(addTaskButton)
-//     })
-
-//     submitButton?.addEventListener("click", () => {
-//         if (!isValidForm()) {
-//             return alert("Task name empty")
-//         }
-//         const newTask = getFormData(formContainer)
-//         addNewTask(newTask)
-//         const taskItemDiv = renderTask(newTask)
-//         taskItemDiv.dataset.id = newTask.id
-//         taskList.append(taskItemDiv)
-//         clearForm()
-
-//     })
-
-//     dateButton?.addEventListener("click", (e) => handleDateButtonClick(e))
-//     priorityButton?.addEventListener("click", (e) => handlePriorityButtonClick(e))
-
-// }
-
-// export function attachTaskItemEventListener(taskItemDiv) {
-//     const checkboxRadio = taskItemDiv.querySelector(".task-item__checkbox-input")
-//     const taskId = taskItemDiv.dataset.id
-
-//     checkboxRadio.onclick = () => {
-//         console.log(taskId)
-//         taskItemDiv.remove()
-//     }
-// }
-
 export function attachTaskFormActionListeners(formContainer) {
     const cancelButton = formContainer.querySelector(".task-add__cancel")
     const submitButton = formContainer.querySelector(".task-add__submit")
@@ -80,8 +36,8 @@ export function attachSetDateButtonsActionListeners() {
     } 
 }
 
-export function attachSetPriorityActionListeners() {
-    const allButtons = document.querySelectorAll(".priorityButton")
+export function attachSetPriorityActionListeners(priorityContainer) {
+    const allButtons = priorityContainer.querySelectorAll(".priorityButton")
     for(let i = 0; i < 4; i++) {
         const button = allButtons[i]
         button.addEventListener("click", () => handleSetPriorityButtonClick(button))

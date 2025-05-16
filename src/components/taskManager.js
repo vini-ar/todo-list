@@ -49,16 +49,14 @@ export const taskManager = {
     },
     getTaskName(targetId) {
         const targetTask = this.getTaskById(targetId)
-        if (!targetTask) {
-            console.error("Task doesnt exist")
-        } 
         return targetTask.name
     },
     getTaskDescription(targetId) {
         const targetTask = this.getTaskById(targetId)
-        if (!targetTask) {
-            console.error("Task doesnt exit")
-        }
         return targetTask.description
+    },
+    getTaskDeadline(targetId) {
+        const targetTask = this.getTaskById(targetId)
+        return targetTask.deadline
     }
 }

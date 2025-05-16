@@ -7,7 +7,36 @@ import { addProject, getColors, getUserProjecstLength, getUserProjectsList, proj
 import { taskFactory } from "./taskFactory"
 import { attachProjectFormActionListeners } from "./projectAttachEventListener"
 import { handleTaskFormDateButtonClick } from "./taskFormHandleActions"
+import { dateManager } from "./dateManager"
+import { placeElementAt } from "./domChanger"
 
+
+export function renderPriorityContainer(e) {
+    const priorityContainer = document.querySelector(".priorityContainer")
+        if (priorityContainer) {
+            return priorityContainer.remove()
+        }
+        //renderPriorityContainer
+            //placeContainerAt()
+            //renderPriorityButtons()
+            //bindPriorityButtonsClick()
+        const buttonCoordinates = e.target.getBoundingClientRect()
+        const newPriorityContainer = elementFactory("div", "", {class: "priorityContainer"})
+        placeElementAt(newPriorityContainer, buttonCoordinates.x, buttonCoordinates.y)
+        for (let i = 1; i < 5; i++) {
+            const button = elementFactory(
+                "button",
+                `Priority ${i}`,
+                {
+                    id: `priority-p${i}`,
+                    class: "priorityButton",
+                    "data-priority": `p${i}`
+                }
+            )
+            newPriorityContainer.append(button)
+        }
+        return newPriorityContainer
+}
 
 export function createDateContainer() { 
     const dateContainer = elementFactory("div", "", { class: "userDateContainer"})
@@ -191,6 +220,7 @@ function getTaskItemId(button) {
 export function renderTaskPage(button) {
     const taskId = getTaskItemId(button)
     const Task = taskManager.getTaskById(taskId)
+    
 
     const taskUpdatePageContainer = document.querySelector(".task-update-page-container")
     const taskUpdatePage = elementFactory(
@@ -209,19 +239,31 @@ export function renderTaskPage(button) {
         <div class='task-info-container'>
             <div id='task-name-update'>Name: ${Task.name}</div>
             <div id='task-description-update'>Description: ${Task.description}</div>
-            <div id='task-date-update' class='task-info task-date-update'>Deadline: ${Task.deadline}</div>
+            <div id='task-date-update' data-value='${Task.deadline}' class='task-info task-date-update'>Deadline: ${Task.getMonthDay()}</div>
             <div id='task-priority-update' class='task-info task-priority-update'>Priority: ${Task.priority}</div>
         </div>
     </div>
     `
+
+    const updateDateDiv = taskUpdatePage.querySelector("#task-date-update")
     const updateTaskQuitButton = taskUpdatePage.querySelector("#updateTaskQuitButton")
+    const updatePriorityDiv = taskUpdatePage.querySelector("#task-priority-update")
     updateTaskQuitButton.addEventListener("click", (e) => {
         const container = e.target.closest("#task-update-page")
         const taskItem = document.querySelector(`.task-item[data-task-id=${Task.id} ]`)
         const taskItemName = taskItem.querySelector(".task-item__name")
         const taskItemDecription = taskItem.querySelector(".task-item__description")
+        const taskItemDate = taskItem.querySelector(".task-item__date")
+
+
         if (taskItemDecription) {
             taskItemDecription.textContent = taskManager.getTaskDescription(Task.id)
+        }
+        if (taskItemDate) {
+            let date = updateDateDiv.getAttribute("data-value")
+            Task.deadline = dateManager.formatDateWithStandardFormat(date)
+            taskItemDate.setAttribute("data-value", Task.deadline)
+            taskItemDate.textContent = Task.getMonthDay()
         }
 
         taskItemName.textContent = taskManager.getTaskName(Task.id)
@@ -293,6 +335,7 @@ export function renderTaskPage(button) {
                 taskManager.updateTaskDescription(Task.id ,inputDescription.value)
                 updateDescriptionDiv.textContent = "Description: " + taskManager.getTaskDescription(Task.id)
             }
+            console.log(taskManager.getTasks())
             inputDescription.remove()
             updateDescriptionButton.remove()
         })
@@ -300,14 +343,16 @@ export function renderTaskPage(button) {
         updateDescriptionDiv.append(inputDescription, updateDescriptionButton)
     })
 
-    const updateDateDiv = taskUpdatePage.querySelector("#task-date-update")
     updateDateDiv.addEventListener("click", (e) => {
         e.stopPropagation()
         if (updateDateDiv.querySelector("#update-task-description-button")) {
             return
         }
         handleTaskFormDateButtonClick(e)
-        
+    })
+
+    updatePriorityDiv.addEventListener("click", (e) => {
+        const priorityContainer = renderPriorityContainer(e)
     })
 
 

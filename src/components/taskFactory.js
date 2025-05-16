@@ -1,4 +1,6 @@
-export function taskFactory(name="", description="", deadline="", hour="",  project="", priority="", done = false) {
+import { dateManager } from "./dateManager"
+
+export function taskFactory(name="", description="", deadline="", hour="",  project="", priority="p4", done = false) {
     return {
         id: "id" + Math.random().toString(16).slice(2),
         description: description,
@@ -13,7 +15,13 @@ export function taskFactory(name="", description="", deadline="", hour="",  proj
         },
         markDone() {
             this.done = true
-        }
+        },
+        updatePriority(newPriority) {
+            this.priority = newPriority
+        },
+        getMonthDay() {
+            return dateManager.formatDateWithMonthDayFormat(this.deadline)
+        },
     }
 
 }

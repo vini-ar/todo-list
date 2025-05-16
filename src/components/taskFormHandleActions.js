@@ -3,7 +3,7 @@ import { clearForm, placeElementAt, toggleButtonVisibility } from "./domChanger"
 import { elementFactory } from "./elementFactory"
 import { isValidForm } from "./formValidations"
 import { getFormData } from "./getFormData"
-import { createDateContainer, renderTaskPage } from "./renderElements"
+import { createDateContainer, renderPriorityContainer, renderTaskPage } from "./renderElements"
 import { renderTask } from "./renderTask"
 import { attachSetDateButtonsActionListeners, attachSetPriorityActionListeners, attachTaskItemActionListeners } from "./taskAttachEventListener"
 import { addNewTask, addTaskToArchive, displayAllTasks, findTaskById, removeTaskById, showAllTasks, showAllTasksArray, showTaskArchive, showTasks, taskManager, updateTaskProject, updateTasksArray } from "./taskManager"
@@ -31,6 +31,7 @@ export function handleTaskFormSubmitButtonClick(button) {
         }
 
         const taskList = document.querySelector(".task-list")
+        console.log(newTask)
         const taskItemDiv = renderTask(newTask)
 
         attachTaskItemActionListeners(taskItemDiv)
@@ -65,7 +66,7 @@ export function handleSetDateButtonClick(e, dateValue) {
     else {
         targetDay = getNextWeek()
     }
-    targetElement.dataset.value = targetDay
+    targetElement.setAttribute("data-value", targetDay)
     targetElement.textContent = getMontDayFormatString(targetDay)
     dateContainer.remove()
 }
@@ -89,40 +90,23 @@ export function handleTaskFormDateButtonClick(e) {
         attachSetDateButtonsActionListeners(e)
 }
 
-export function handleSetPriorityButtonClick(button) {
-    const prioritySpan = document.querySelector("#task-priority-span")
-    const priorityContainer = document.querySelector(".priorityContainer")
-    
-    prioritySpan.textContent = button.getAttribute("data-priority")
-    prioritySpan.dataset.priority = button.getAttribute("data-priority")
+export function handleSetPriorityButtonClick(setPriorityButton) {
+    const targetElement = document.querySelector("#task-priority-span")
+    console.log(targetElement)
+    const priorityContainer = setPriorityButton.closest(".priorityContainer")
+
+    if (!targetElement) {
+        targetElement = setPriorityButton.closest("#task-priority-update")
+    }
+    const priorityValue = setPriorityButton.getAttribute("data-priority")
+    targetElement.setAttribute("priority-value", priorityValue)
+    targetElement.textContent = priorityValue;
     priorityContainer.remove()
 }
 
 
 export function handleTaskFormPriorityButtonClick(e) {
-    const priorityContainer = document.querySelector(".priorityContainer")
-    if (priorityContainer) {
-        return priorityContainer.remove()
-    }
-    //renderPriorityContainer
-        //placeContainerAt()
-        //renderPriorityButtons()
-        //bindPriorityButtonsClick()
-    const buttonCoordinates = e.target.getBoundingClientRect()
-    const newPriorityContainer = elementFactory("div", "", {class: "priorityContainer"})
-    placeElementAt(newPriorityContainer, buttonCoordinates.x, buttonCoordinates.y)
-    for (let i = 1; i < 5; i++) {
-        const button = elementFactory(
-            "button",
-            `Priority ${i}`,
-            {
-                id: `priority-p${i}`,
-                class: "priorityButton",
-                "data-priority": `p${i}`
-            }
-        )
-        newPriorityContainer.append(button)
-    }
-    attachSetPriorityActionListeners()
+    const priorityContainer = renderPriorityContainer(e)
+    attachSetPriorityActionListeners(priorityContainer)
 }
 

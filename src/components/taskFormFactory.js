@@ -32,7 +32,7 @@ export function taskFormFactory() {
         "",
         {
             id: "task-date-span",
-            "data-value": ""
+            "date-value": ""
         }
     )
     const spanPriority = elementFactory(
@@ -40,7 +40,7 @@ export function taskFormFactory() {
         "", 
         {
             id: "task-priority-span",
-            "data-value": ""
+            "priority-value": ""
         }
     )
 

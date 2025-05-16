@@ -1,8 +1,13 @@
+import { dateManager } from './dateManager';
 import { elementFactory } from './elementFactory';
 
 
 export function renderTask(Task) {
    const taskList = document.querySelector(".task-list")
+   let monthDay = ""
+   if (Task.deadline) {
+        monthDay = dateManager.formatDateWithMonthDayFormat(Task.deadline)
+   }
     
     const divContainer = elementFactory(
         "div", 
@@ -56,9 +61,10 @@ export function renderTask(Task) {
 
     const spanTaskDate = elementFactory(
         "span",
-        Task.deadline,
+         monthDay,
         { 
-            class: "task-item__date"
+            class: "task-item__date",
+            "data-value": Task.deadline
         }
 
     );

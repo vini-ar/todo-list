@@ -10,12 +10,12 @@ export function getFormData(formContainer) {
 
     const taskName = taskNameInput.value
     const taskDescription = taskDescriptionInput.value
-    const taskDate = taskDateSpan.textContent
+    const taskDate = taskDateSpan.dataset.value
     const taskPriority = taskPrioritySpan.textContent
     const taskProject = taskProjectSelect.value
 
     const taskHour = ""
-       
+    
     
     return taskFactory(taskName, taskDescription, taskDate, taskHour, taskProject, taskPriority)
 
