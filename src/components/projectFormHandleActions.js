@@ -1,17 +1,17 @@
+import { displayProjectCounter } from "../pages/projects";
 import { elementFactory } from "./elementFactory";
-import { addProject, projectObjectFactory } from "./projectManager";
+import { addProject, projectManager, projectObjectFactory } from "./projectManager";
 import { renderProjectItem } from "./renderElements";
 
-export function handleProjectFormCancelButtonClick(formContainer) {
-    formContainer.innerHTML = '';
-    formContainer.classList.toggle("hide")
+export function handleProjectFormCancelButtonClick(createProjectForm) {
+    createProjectForm.remove()
 }
 
-export function handleProjectFormSubmitButtonClick(formContainer) {
-    const projectNameInput = formContainer.querySelector("#projectNameInput")
-    const projectColorSelect = formContainer.querySelector("#projectColorSelect")
-    const projectParentSelect = formContainer.querySelector("#projectParentSelect")
-    const projectList = document.querySelector('.project__list')
+export function handleProjectFormSubmitButtonClick(createProjectForm) {
+    const projectNameInput = createProjectForm.querySelector("#projectNameInput")
+    const projectColorSelect = createProjectForm.querySelector("#projectColorSelect")
+    const projectParentSelect = createProjectForm.querySelector("#projectParentSelect")
+    const projectList = document?.querySelector('.project__list')
 
     const projectName = projectNameInput.value
     const projectParent = projectParentSelect.value
@@ -23,14 +23,16 @@ export function handleProjectFormSubmitButtonClick(formContainer) {
     }
     
     //data manage
-    const Project = projectObjectFactory(projectName, projectColor, projectParent)
-    addProject(Project)
-    formContainer.innerHTML = '';
-    formContainer.classList.toggle("hide")
+    const Project = projectManager.createProject(projectName, projectColor, projectParent)
+    projectManager.addProject(Project)
+        
+    createProjectForm.remove()
+    displayProjectCounter()
 
     if (!projectList) {
-        return formContainer.remove()
+        return  
     }
     const projectItem = renderProjectItem(Project)
-    projectList.append(projectItem)
+    projectList.append(projectItem) 
+    return projectItem
 }

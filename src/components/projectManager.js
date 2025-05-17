@@ -20,6 +20,28 @@ export function projectObjectFactory(name="", color="", parentProject="") {
     }
 }
 
+export const projectManager = {
+    userProjects: [],
+    createProject(projectName = "", projectColor = "", projectParent = "") {
+        return projectObjectFactory(projectName, projectColor, projectParent)
+    },
+    displayProjectList() {
+        return [...this.userProjects]
+    },
+    getProjectList() {
+        return this.userProjects
+    }, 
+    getProjectLength() {
+        return [...this.userProjects].length
+    },
+    getProjectById(targetId) {
+        const Project = this.getProjectList().find((project) => project.id === targetId)
+        return Project
+    },
+    addProject(newProject) {
+        this.getProjectList().push(newProject)
+    },
+}
 export function addProject(Project) {
     if (typeof Project !== 'object') {
         return console.error("You must pass an object")

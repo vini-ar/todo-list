@@ -91,22 +91,27 @@ export function handleTaskFormDateButtonClick(e) {
 }
 
 export function handleSetPriorityButtonClick(setPriorityButton) {
-    const targetElement = document.querySelector("#task-priority-span")
-    console.log(targetElement)
-    const priorityContainer = setPriorityButton.closest(".priorityContainer")
+    let targetElement = setPriorityButton.closest('#task-priority-update')
+    const priorityValue = setPriorityButton.getAttribute("data-priority")
 
     if (!targetElement) {
-        targetElement = setPriorityButton.closest("#task-priority-update")
+        targetElement = document.querySelector("#task-priority-span")
+        targetElement.textContent = priorityValue;
     }
-    const priorityValue = setPriorityButton.getAttribute("data-priority")
+    else {
+        targetElement.textContent = "Priority: " + priorityValue
+    }
     targetElement.setAttribute("priority-value", priorityValue)
-    targetElement.textContent = priorityValue;
+    const priorityContainer = setPriorityButton.closest(".priorityContainer")
     priorityContainer.remove()
 }
 
 
 export function handleTaskFormPriorityButtonClick(e) {
-    const priorityContainer = renderPriorityContainer(e)
+    const priorityContainer = renderPriorityContainer()
+    const buttonCoordinates = e.target.getBoundingClientRect()
+
+    placeElementAt(priorityContainer, buttonCoordinates.x, buttonCoordinates.y)
     attachSetPriorityActionListeners(priorityContainer)
 }
 

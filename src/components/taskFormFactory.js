@@ -1,4 +1,5 @@
 import { elementFactory } from "./elementFactory"
+import { projectManager } from "./projectManager";
 
 export function taskFormFactory() {
     const container = elementFactory(
@@ -125,9 +126,21 @@ export function taskFormFactory() {
         "option",
         "Inbox",
         {
-            value: "inbox"
+            value: "inbox",
+            selected: "selected"
         }
     )
+    
+    projectManager.displayProjectList().forEach(project => {
+        const optionUserProject = elementFactory(
+            "option",
+            project.name,
+            {
+              value: project.id
+            }
+        )
+        selectProject.append(optionUserProject)
+    })
     
     const formControlls = elementFactory(
         "div",

@@ -1,6 +1,6 @@
 import { addNewTask, findTaskById, taskManager, userTasksDatabase } from "./taskManager"
 import { elementFactory } from "./elementFactory"
-import { attachFormActionListeners, attachSetDateButtonsActionListeners, attachTaskFormActionListeners, handleEventListenerTaskItem } from "./taskAttachEventListener"
+import { attachFormActionListeners, attachSetDateButtonsActionListeners, attachSetPriorityActionListeners, attachTaskFormActionListeners, handleEventListenerTaskItem } from "./taskAttachEventListener"
 import { renderTask } from "./renderTask"
 import { taskFormFactory } from "./taskFormFactory"
 import { addProject, getColors, getUserProjecstLength, getUserProjectsList, projectObjectFactory, userProjectObjectFactory } from "./projectManager"
@@ -11,18 +11,12 @@ import { dateManager } from "./dateManager"
 import { placeElementAt } from "./domChanger"
 
 
-export function renderPriorityContainer(e) {
+export function renderPriorityContainer() {
     const priorityContainer = document.querySelector(".priorityContainer")
         if (priorityContainer) {
             return priorityContainer.remove()
         }
-        //renderPriorityContainer
-            //placeContainerAt()
-            //renderPriorityButtons()
-            //bindPriorityButtonsClick()
-        const buttonCoordinates = e.target.getBoundingClientRect()
         const newPriorityContainer = elementFactory("div", "", {class: "priorityContainer"})
-        placeElementAt(newPriorityContainer, buttonCoordinates.x, buttonCoordinates.y)
         for (let i = 1; i < 5; i++) {
             const button = elementFactory(
                 "button",
@@ -108,8 +102,8 @@ export function renderUserTask() {
 }
 
 export function renderAddProjectForm(formContainer) {
-    formContainer.innerHTML = `
-    <form class="projectForm" id="newProjectForm">
+    const form = elementFactory("form", "", {class: "projectForm", id: "newProjectForm"})
+    form.innerHTML = `
         <label for="projectNameInput"> Name:
             <input type="text" name="projectName" id="projectNameInput">
         </label>
@@ -119,22 +113,21 @@ export function renderAddProjectForm(formContainer) {
         <label for="projectParentSelect"> Parent project:
             <select name="projectParents" id="projectParentSelect"></select>
         </label>
-    </form>
     <div class="form-controlls">
         <button class="projectFormCancelButton" type='button'>Cancel</button>
         <button class="projectFormSubmitButton" type='submit'>Submit</button>
     </div>
                 
     `
-    formContainer.classList.toggle("hide")
-    renderProjectColorOptions(formContainer)
-    renderParentProjectOptions(formContainer)
-    attachProjectFormActionListeners(formContainer)
+    renderProjectColorOptions(form)
+    renderParentProjectOptions(form)
+    return form
+
 
 }
 
-function renderProjectColorOptions(formContainer) {
-    const projectColorSelect = formContainer.querySelector("#projectColorSelect")
+function renderProjectColorOptions(form) {
+    const projectColorSelect = form.querySelector("#projectColorSelect")
     const colors = getColors()
     colors.forEach((color) => {
         const colorOption = elementFactory(
@@ -181,30 +174,18 @@ function renderParentProjectOptions(formContainer) {
 }
 
 
-export function renderProjectItem() {
-    const projectItemContainer = elementFactory(
+export function renderProjectItem(Project) {
+    const projectItemDiv = elementFactory(
         "div",
-        "",
-        {
-            class: "projectItemContainer"            
-        }
-
-    )
-
-    const projectItemButton = elementFactory(
-        "button",
         Project.name,
         {
-            class: "projecItemButton",
+            class: "projectItemDiv",
             "data-id": Project.id,
             style: "color: " + Project.color,
             "data-project-id": Project.id
         }
     )
-
-    projectItemContainer.append(projectItemButton)
-
-    return projectItemContainer
+    return projectItemDiv
 }
 
 function getTaskItemId(button) {
@@ -219,10 +200,11 @@ function getTaskItemId(button) {
 
 export function renderTaskPage(button) {
     const taskId = getTaskItemId(button)
-    const Task = taskManager.getTaskById(taskId)
+    const Task  = taskManager.getTaskById(taskId)
     
-
-    const taskUpdatePageContainer = document.querySelector(".task-update-page-container")
+    const content = document.querySelector("#content")
+    const taskUpdatePageContainer = elementFactory("div","", {class: "task-update-page-container"})
+    content.append(taskUpdatePageContainer)
     const taskUpdatePage = elementFactory(
         "div", 
         "teste", 
@@ -248,13 +230,17 @@ export function renderTaskPage(button) {
     const updateDateDiv = taskUpdatePage.querySelector("#task-date-update")
     const updateTaskQuitButton = taskUpdatePage.querySelector("#updateTaskQuitButton")
     const updatePriorityDiv = taskUpdatePage.querySelector("#task-priority-update")
+
+
     updateTaskQuitButton.addEventListener("click", (e) => {
         const container = e.target.closest("#task-update-page")
         const taskItem = document.querySelector(`.task-item[data-task-id=${Task.id} ]`)
         const taskItemName = taskItem.querySelector(".task-item__name")
         const taskItemDecription = taskItem.querySelector(".task-item__description")
         const taskItemDate = taskItem.querySelector(".task-item__date")
+        const taskItemPriority = taskItem.querySelector(".task-item__priority")
 
+        console.log("Depois: ", taskManager.getTaskById(Task.id))
 
         if (taskItemDecription) {
             taskItemDecription.textContent = taskManager.getTaskDescription(Task.id)
@@ -264,6 +250,10 @@ export function renderTaskPage(button) {
             Task.deadline = dateManager.formatDateWithStandardFormat(date)
             taskItemDate.setAttribute("data-value", Task.deadline)
             taskItemDate.textContent = Task.getMonthDay()
+        }
+
+        if (taskItemPriority) {
+            taskItemPriority.textContent = taskManager.getTaskPriority(Task.id)
         }
 
         taskItemName.textContent = taskManager.getTaskName(Task.id)
@@ -349,13 +339,32 @@ export function renderTaskPage(button) {
             return
         }
         handleTaskFormDateButtonClick(e)
+        //update logic to be equal as priority Div
     })
 
     updatePriorityDiv.addEventListener("click", (e) => {
-        const priorityContainer = renderPriorityContainer(e)
+        e.stopPropagation()
+        let priorityContainer = updatePriorityDiv.querySelector(".priorityContainer")
+        if (!priorityContainer) {
+            const setPriorityContainer = renderPriorityContainer()
+            attachSetPriorityActionListeners(setPriorityContainer)
+            updatePriorityDiv.append(setPriorityContainer)
+
+        }
+
+        if (updatePriorityDiv?.querySelector("#update-priority-button")) {
+            return 
+        }
+        const updateButton = elementFactory("button", "Save", {id: "update-priority-button"})
+        updateButton.addEventListener("click", (e) => {
+            e.stopPropagation()
+            const priorityValue = updatePriorityDiv.getAttribute("data-priority")
+            updatePriorityDiv.querySelector(".priorityContainer").remove()
+            updateButton.remove()
+        })
+        updatePriorityDiv.append(updateButton)
     })
 
-
-
     taskUpdatePageContainer.append(taskUpdatePage)
+    taskUpdatePage
 }

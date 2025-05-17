@@ -58,5 +58,9 @@ export const taskManager = {
     getTaskDeadline(targetId) {
         const targetTask = this.getTaskById(targetId)
         return targetTask.deadline
+    },
+    getTaskPriority(targetId) {
+        const targetTask = this.getTaskById(targetId)
+        return targetTask.priority
     }
 }

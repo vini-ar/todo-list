@@ -334,3 +334,15 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   pointer-events: auto;
 }
+#newProjectForm {
+  border: 1px solid black;
+  height: fit-content;
+  width: fit-content;
+  padding: 1rem;
+}
+.projectItemDiv {
+  font-weight: bolder;
+  cursor: pointer;
+  border: 1px solid black;
+  padding: 1rem;
+}

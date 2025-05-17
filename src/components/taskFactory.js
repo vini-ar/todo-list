@@ -20,6 +20,9 @@ export function taskFactory(name="", description="", deadline="", hour="",  proj
             this.priority = newPriority
         },
         getMonthDay() {
+            if (!deadline) {
+                return
+            }
             return dateManager.formatDateWithMonthDayFormat(this.deadline)
         },
     }
