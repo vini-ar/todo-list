@@ -3,10 +3,12 @@ let colors = ["red", "yellow", "black"]
 
 export function projectObjectFactory(name="", color="", parentProject="") {
     if (!name) {
-        return alert("You cannot create an project Without Name")
+        window.alert("You cannot create an project Without Name")
+        return 
     }
     if (!color.includes(color)) {
-         return alert("Invalid Color")
+        window.alert("Invalid Color")
+        return 
     }
     if (!userProjects.includes(parentProject)) {
         parentProject = "No Parent"
@@ -44,19 +46,20 @@ export const projectManager = {
 }
 export function addProject(Project) {
     if (typeof Project !== 'object') {
-        return console.error("You must pass an object")
+        console.error("You must pass an object")
+        return
     }
     userProjects.push(Project)
 }
 
 export function getColors() {
-    return colors
+    return [...colors]
 }
 
 export function getUserProjectsList() {
-    return userProjects
+    return [...userProjects]
 }
 
 export function getUserProjecstLength() {
-    return userProjects.length
+    return [...userProjects].length
 }

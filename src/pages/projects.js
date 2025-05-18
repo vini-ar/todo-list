@@ -1,7 +1,7 @@
 import '../styles/styles.css'
-import { addProject, getColors, getUserProjecstLength, getUserProjectsList, projectManager, projectObjectFactory } from '../components/projectManager'
+import { projectManager } from '../components/projectManager'
 import { elementFactory } from '../components/elementFactory'
-import { renderAddProjectForm, renderProjectForm, renderSidebarAddTaskFormContainer, renderTaskPage } from '../components/renderElements'
+import { renderAddProjectForm, renderSidebarAddTaskFormContainer, renderTaskPage } from '../components/renderElements'
 import { taskManager } from '../components/taskManager'
 import { handleProjectFormCancelButtonClick, handleProjectFormSubmitButtonClick } from '../components/projectFormHandleActions'
 import { renderTask } from '../components/renderTask'
@@ -9,15 +9,13 @@ import { renderTask } from '../components/renderTask'
 
 export function displayProjectCounter() {
     const projectSpanCount = document.querySelector(".project__counter-span")
-    if (!projectSpanCount) {
-        return
-    }   
+    if (!projectSpanCount) return console.error("Cannot find projectSpanCount")
+    
     let counter = projectManager.getProjectLength()
 
     if (counter === 0 || counter === 1) {
         projectSpanCount.textContent = counter + " project"
-    }
-    else {
+    } else {
         projectSpanCount.textContent = counter + " projects"
     }
 }
@@ -81,9 +79,8 @@ export const manageProjectUI = {
     },
     renderProjectPage(targetProjectId) {
         const Project = projectManager.getProjectById(targetProjectId)
-        if (!Project) {
-            return console.error("Cannot Find Project")
-        }
+        if (!Project) return console.error("Cannot Find Project")
+
         const header = elementFactory("h1", Project.name, {class: "project-header"})
         const taskList = elementFactory("div", "", {class: "task-list"})
         this.content.append(header, taskList)

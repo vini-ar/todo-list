@@ -1,14 +1,13 @@
 import '../styles/styles.css'
-import { renderAddTaskFormContainer, renderContentAddTaskFormContainer, renderFloatingFormContainer, renderFormContainer, renderProjectContentTemplate, renderSidebarAddTaskFormContainer, renderUserTask } from '../components/renderElements.js';
-import { hiddeButton, toggleButtonVisibility, toggleElementVisibility } from '../components/domChanger.js';
-import { manageProjectUI } from './projects.js';
+import { renderContentAddTaskFormContainer, renderSidebarAddTaskFormContainer, renderUserTask } from '../components/renderElements.js';
+import { toggleButtonVisibility } from '../components/domChanger.js';
 
 
 
 
 const initUI = {
     start() {
-        renderUserTask();
+        renderUserTask()
         this.getDOM()
         this.attachTaskPageEventListener()
     },

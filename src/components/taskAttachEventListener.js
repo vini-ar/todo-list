@@ -1,14 +1,6 @@
-import { addNewTask, taskManager } from './taskManager.js';
-import { getMontDayFormatString, getNextWeek, getToday, getTomorrow, getNextWeekendDay } from './dateManager.js';
-import { clearForm, placeElementAt, removeContainer, removeElementById, toggleButtonVisibility } from './domChanger.js';
-import { elementFactory } from './elementFactory.js';
-import { isValidForm } from './formValidations.js';
-import { getFormData } from './getFormData.js';
-import { createDateContainer, renderTaskPage } from "./renderElements.js";
-import { renderTask } from './renderTask.js';
-import { taskFormFactory } from "./taskFormFactory.js";
-import { setDate } from 'date-fns';
-import { bindDateButtonsClick, handleSetDateButtonClick, handleSetPriorityButtonClick, handleTaskFormCancelButton, handleTaskFormCancelButtonClick, handleTaskFormDateButtonClick, handleTaskFormPriorityButtonClick, handleTaskFormSubmitButtonClick } from './taskFormHandleActions.js';
+
+import { renderTaskPage } from "./renderElements.js";
+import { handleSetDateButtonClick, handleSetPriorityButtonClick, handleTaskFormCancelButtonClick, handleTaskFormDateButtonClick, handleTaskFormPriorityButtonClick, handleTaskFormSubmitButtonClick } from './taskFormHandleActions.js';
 import { handleTaskItemCheckboxClick } from './taskItemHandleActions.js';
 
 export function attachTaskFormActionListeners(formContainer) {

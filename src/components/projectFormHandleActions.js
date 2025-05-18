@@ -1,6 +1,5 @@
 import { displayProjectCounter } from "../pages/projects";
-import { elementFactory } from "./elementFactory";
-import { addProject, projectManager, projectObjectFactory } from "./projectManager";
+import { projectManager} from "./projectManager";
 import { renderProjectItem } from "./renderElements";
 
 export function handleProjectFormCancelButtonClick(createProjectForm) {
@@ -19,9 +18,9 @@ export function handleProjectFormSubmitButtonClick(createProjectForm) {
 
     //isValidForm()
     if (!projectName) {
-        return alert("Cannot create preojct without name")
+        window.alert("Cannot create project without name")
+        return 
     }
-    
     //data manage
     const Project = projectManager.createProject(projectName, projectColor, projectParent)
     projectManager.addProject(Project)
@@ -29,9 +28,8 @@ export function handleProjectFormSubmitButtonClick(createProjectForm) {
     createProjectForm.remove()
     displayProjectCounter()
 
-    if (!projectList) {
-        return  
-    }
+    if (!projectList) return
+
     const projectItem = renderProjectItem(Project)
     projectList.append(projectItem) 
     return projectItem

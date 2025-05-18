@@ -1,10 +1,5 @@
 import { taskFormFactory } from "./taskFormFactory"
 import { loadPageSideBar } from "./loadPageSidebar"
-import { getFormData } from "./getFormData"
-import { taskFactory } from "./taskFactory"
-import { renderTask } from "./renderTask"
-import { handleEventListenerContentFormButtonInbox } from "../pages/inbox"
-
 
 
 export function sidebarControlls() {

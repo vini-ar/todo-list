@@ -1,14 +1,11 @@
-import { addNewTask, findTaskById, taskManager, userTasksDatabase } from "./taskManager"
+import { taskManager, userTasksDatabase } from "./taskManager"
 import { elementFactory } from "./elementFactory"
-import { attachFormActionListeners, attachSetDateButtonsActionListeners, attachSetPriorityActionListeners, attachTaskFormActionListeners, handleEventListenerTaskItem } from "./taskAttachEventListener"
+import { attachSetPriorityActionListeners, attachTaskFormActionListeners } from "./taskAttachEventListener"
 import { renderTask } from "./renderTask"
 import { taskFormFactory } from "./taskFormFactory"
-import { addProject, getColors, getUserProjecstLength, getUserProjectsList, projectObjectFactory, userProjectObjectFactory } from "./projectManager"
-import { taskFactory } from "./taskFactory"
-import { attachProjectFormActionListeners } from "./projectAttachEventListener"
+import { getColors, getUserProjecstLength, getUserProjectsList } from "./projectManager"
 import { handleTaskFormDateButtonClick } from "./taskFormHandleActions"
 import { dateManager } from "./dateManager"
-import { placeElementAt } from "./domChanger"
 
 
 export function renderPriorityContainer() {
@@ -73,8 +70,6 @@ export function createDateContainer() {
 export function renderSidebarAddTaskFormContainer() {
         const formContainer = taskFormFactory()
         formContainer.setAttribute("id", "floating-task-add-container")
-        content.append(formContainer)
-
         attachTaskFormActionListeners(formContainer)
         
 }
@@ -101,7 +96,7 @@ export function renderUserTask() {
     }
 }
 
-export function renderAddProjectForm(formContainer) {
+export function renderAddProjectForm() {
     const form = elementFactory("form", "", {class: "projectForm", id: "newProjectForm"})
     form.innerHTML = `
         <label for="projectNameInput"> Name:
@@ -126,7 +121,7 @@ export function renderAddProjectForm(formContainer) {
 
 }
 
-function renderProjectColorOptions(form) {
+function renderProjectColorOptions  (form) {
     const projectColorSelect = form.querySelector("#projectColorSelect")
     const colors = getColors()
     colors.forEach((color) => {
@@ -367,7 +362,6 @@ export function renderTaskPage(button) {
         const updateButton = elementFactory("button", "Save", {id: "update-priority-button"})
         updateButton.addEventListener("click", (e) => {
             e.stopPropagation()
-            const priorityValue = updatePriorityDiv.getAttribute("data-priority")
             updatePriorityDiv.querySelector(".priorityContainer").remove()
             updateButton.remove()
         })

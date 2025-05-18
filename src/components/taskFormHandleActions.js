@@ -1,113 +1,100 @@
 import { getMontDayFormatString, getNextWeek, getNextWeekendDay, getToday, getTomorrow } from "./dateManager"
 import { clearForm, placeElementAt, toggleButtonVisibility } from "./domChanger"
-import { elementFactory } from "./elementFactory"
 import { isValidForm } from "./formValidations"
 import { getFormData } from "./getFormData"
-import { createDateContainer, renderPriorityContainer, renderTaskPage } from "./renderElements"
+import { createDateContainer, renderPriorityContainer } from "./renderElements"
 import { renderTask } from "./renderTask"
 import { attachSetDateButtonsActionListeners, attachSetPriorityActionListeners, attachTaskItemActionListeners } from "./taskAttachEventListener"
-import { addNewTask, addTaskToArchive, displayAllTasks, findTaskById, removeTaskById, showAllTasks, showAllTasksArray, showTaskArchive, showTasks, taskManager, updateTaskProject, updateTasksArray } from "./taskManager"
+import { taskManager} from "./taskManager"
 
-export function handleTaskFormCancelButtonClick(formContainer) {
-    //Can be everything in one logic improve later
-    const taskAddButton = document.querySelector("#create-task-add-form")
-    if (formContainer.id === "task-add-form-container") {
-        toggleButtonVisibility(taskAddButton)
+export function handleTaskFormCancelButtonClick (formContainer) {
+    const taskAddButton = document.querySelector('#create-task-add-form')
+    if (formContainer.id !== 'task-add-form-container') return formContainer.remove()
+    toggleButtonVisibility(taskAddButton)
+}
+
+
+export function handleTaskFormSubmitButtonClick (button) {
+    if (!isValidForm()) {
+        window.alert('Task name empty')
+        return
     }
-    formContainer.remove()
+    const form = button.closest('.task-add__form-container')
+    const newTask = getFormData(form)
+    taskManager.addTask(newTask)
+
+    if (form.id !== 'task-add-form-container') return form.remove()    
+
+    const taskList = document.querySelector('.task-list')
+    const taskItemDiv = renderTask(newTask)
+
+    attachTaskItemActionListeners(taskItemDiv)
+
+    taskList.append(taskItemDiv)
+    clearForm()
 }
 
-
-export function handleTaskFormSubmitButtonClick(button) {
-        if (!isValidForm()) {
-            return alert("Task name empty")
-        }
-        const form = button.closest(".task-add__form-container")
-        const newTask = getFormData(form)
-        taskManager.addTask(newTask)
-        
-        if (form.id !== "task-add-form-container") {
-            return form.remove()    
-        }
-
-        const taskList = document.querySelector(".task-list")
-        console.log(newTask)
-        const taskItemDiv = renderTask(newTask)
-
-        attachTaskItemActionListeners(taskItemDiv)
-
-        taskList.append(taskItemDiv)
-        clearForm()
-}
-
-export function handleSetDateButtonClick(e, dateValue) {
+export function handleSetDateButtonClick (e, dateValue) {
     e.stopPropagation()
-    const dateContainer = e.target.closest(".userDateContainer")
+    const dateContainer = e.target.closest('.userDateContainer')
 
-    let targetElement;
-    if (e.target.closest("#task-date-update")) {
-        targetElement = e.target.closest("#task-date-update")
-    }
-    else {
-        targetElement = document.querySelector("#task-date-span")
+    let targetElement
+    if (e.target.closest('task-date-update')) {
+        targetElement = e.target.closest('#task-date-update')
+    } else {
+        targetElement = document.querySelector('#task-date-span')
     }
     
     let targetDay;
 
-    if (dateValue === "today") {
+    if (dateValue === 'today') {
         targetDay = getToday()
-    }  
-    else if (dateValue === "tomorrow") {
+    } else if (dateValue === 'tomorrow') {
         targetDay = getTomorrow()
-    } 
-    else if (dateValue === "weekend") {
+    } else if (dateValue === 'weekend') {
         targetDay = getNextWeekendDay()
-    }
-    else {
+    } else {
         targetDay = getNextWeek()
     }
-    targetElement.setAttribute("data-value", targetDay)
+    targetElement.setAttribute('data-value', targetDay)
     targetElement.textContent = getMontDayFormatString(targetDay)
     dateContainer.remove()
 }
 
 
-export function handleTaskFormDateButtonClick(e) {
-        e.stopPropagation()
-        const dateContainer = document.querySelector(".userDateContainer")
-        const taskDateUpdate = e.target?.closest("#task-date-update")
-        if (dateContainer) {
-            return dateContainer.remove()
-        }
-        const newDateContainer = createDateContainer()
-        const buttonCoordinates = e.target.getBoundingClientRect()
+export function handleTaskFormDateButtonClick (e) {
+    e.stopPropagation()
+    const dateContainer = document.querySelector('.userDateContainer')
+    const taskDateUpdate = e.target?.closest('#task-date-update')
     
-        if (taskDateUpdate) {
-            taskDateUpdate.append(newDateContainer)
-        } else {
-            placeElementAt(newDateContainer, buttonCoordinates.x, buttonCoordinates.y)
-        }
-        attachSetDateButtonsActionListeners(e)
+    if (dateContainer) return dateContainer.remove()
+    
+    const newDateContainer = createDateContainer()
+    const buttonCoordinates = e.target.getBoundingClientRect()
+
+    taskDateUpdate === null 
+        ? placeElementAt(newDateContainer, buttonCoordinates.x, buttonCoordinates.y) 
+        : taskDateUpdate.append(newDateContainer) 
+    attachSetDateButtonsActionListeners(e)
 }
 
-export function handleSetPriorityButtonClick(setPriorityButton) {
+export function handleSetPriorityButtonClick (setPriorityButton) {
     let targetElement = setPriorityButton.closest('#task-priority-update')
-    const priorityValue = setPriorityButton.getAttribute("data-priority")
+    const priorityValue = setPriorityButton.getAttribute('data-priority')
 
     if (!targetElement) {
-        targetElement = document.querySelector("#task-priority-span")
-        targetElement.textContent = priorityValue;
+        targetElement = document.querySelector('#task-priority-span')
+        targetElement.textContent = priorityValue
+    } else {
+        targetElement.textContent = 'Priority: ' + priorityValue
     }
-    else {
-        targetElement.textContent = "Priority: " + priorityValue
-    }
-    targetElement.setAttribute("priority-value", priorityValue)
-    const priorityContainer = setPriorityButton.closest(".priorityContainer")
+    targetElement.setAttribute('priority-value', priorityValue)
+    const priorityContainer = setPriorityButton.closest('.priorityContainer')
     priorityContainer.remove()
 }
 
 
-export function handleTaskFormPriorityButtonClick(e) {
+export function handleTaskFormPriorityButtonClick (e) {
     const priorityContainer = renderPriorityContainer()
     const buttonCoordinates = e.target.getBoundingClientRect()
 

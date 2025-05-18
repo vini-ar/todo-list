@@ -3,7 +3,6 @@ import { elementFactory } from './elementFactory';
 
 
 export function renderTask(Task) {
-   const taskList = document.querySelector(".task-list")
    let monthDay = ""
    if (Task.deadline) {
         monthDay = dateManager.formatDateWithMonthDayFormat(Task.deadline)
