@@ -216,6 +216,7 @@ export function renderTaskPage(button) {
     taskUpdatePage.innerHTML = 
     `<div class="controlls">
         <button id='updateTaskQuitButton' class=''>Quit</button>
+        <button id='removeTodo'>Remove Todo</button>
     </div>
     <div>
         <div class='task-info-container'>
@@ -230,7 +231,15 @@ export function renderTaskPage(button) {
     const updateDateDiv = taskUpdatePage.querySelector("#task-date-update")
     const updateTaskQuitButton = taskUpdatePage.querySelector("#updateTaskQuitButton")
     const updatePriorityDiv = taskUpdatePage.querySelector("#task-priority-update")
+    const removeTodoButton = taskUpdatePage.querySelector("#removeTodo")
 
+    removeTodoButton.addEventListener("click", () => {
+        const taskItem = document?.querySelector(`.task-item[data-task-id='${Task.id}']`)
+        taskItem.remove()
+        taskManager.removeTaskById(Task.id)
+        taskUpdatePage.innerHTML = ""
+        taskUpdatePage.remove()
+    })
 
     updateTaskQuitButton.addEventListener("click", (e) => {
         const container = e.target.closest("#task-update-page")
