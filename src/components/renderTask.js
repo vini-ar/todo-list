@@ -1,78 +1,48 @@
-import { dateManager } from './dateManager';
-import { elementFactory } from './elementFactory';
-
+import { dateManager } from "./dateManager";
+import { elementFactory } from "./elementFactory";
 
 export function renderTask(Task) {
-   let monthDay = ""
-   if (Task.deadline) {
-        monthDay = dateManager.formatDateWithMonthDayFormat(Task.deadline)
-   }
-    
-    const divContainer = elementFactory(
-        "div", 
-        "", 
-        { 
-            class: "task-item",
-            "data-task-id": Task.id
-        }
-    );
-    
-    const divCheckboxWrapper = elementFactory(
-        "div", 
-        "", 
-        { 
-            class: "task-item__checkbox-wrapper" 
-        }
-    );
+  let monthDay = "";
+  if (Task.deadline) {
+    monthDay = dateManager.formatDateWithMonthDayFormat(Task.deadline);
+  }
 
-    const checkbox = elementFactory(
-        "input", 
-        "", 
-        { 
-            class: "task-item__checkbox-input", 
-            type: "checkbox"
-        } 
-    );
+  const divContainer = elementFactory("div", "", {
+    class: "task-item",
+    "data-task-id": Task.id,
+  });
 
-    const divTaskWrapper = elementFactory(
-        "div",
-        "",
-        { 
-            class: "task-item__info" 
-        }
-    );
+  const divCheckboxWrapper = elementFactory("div", "", {
+    class: "task-item__checkbox-wrapper",
+  });
 
-    const spanTaskName = elementFactory(
-        "span",
-        Task.name,
-        { 
-            class: "task-item__name" 
-        }
-    );
+  const checkbox = elementFactory("input", "", {
+    class: "task-item__checkbox-input",
+    type: "checkbox",
+  });
 
-    const spanTaskDescription = elementFactory(
-        "span",
-        Task.description,
-        { 
-            class: "task-item__description" 
-        }  
-    );
+  const divTaskWrapper = elementFactory("div", "", {
+    class: "task-item__info",
+  });
 
-    const spanTaskDate = elementFactory(
-        "span",
-         monthDay,
-        { 
-            class: "task-item__date",
-            "data-value": Task.deadline
-        }
+  const spanTaskName = elementFactory("span", Task.name, {
+    class: "task-item__name",
+  });
 
-    );
+  const spanTaskDescription = elementFactory("span", Task.description, {
+    class: "task-item__description",
+  });
 
-    divCheckboxWrapper.append(checkbox)
-    divTaskWrapper.append(spanTaskName, spanTaskDescription, spanTaskDate)
+  const spanTaskDate = elementFactory("span", monthDay, {
+    class: "task-item__date",
+    "data-value": Task.deadline,
+  });
 
-    divContainer.append(divCheckboxWrapper, divTaskWrapper)
-    divContainer.dataset.taskId = Task.id
+  divCheckboxWrapper.append(checkbox);
+  divTaskWrapper.append(spanTaskName, spanTaskDescription, spanTaskDate);
 
-    return divContainer
+  divContainer.append(divCheckboxWrapper, divTaskWrapper);
+  divContainer.dataset.taskId = Task.id;
+
+  return divContainer;
 }

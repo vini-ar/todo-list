@@ -1,191 +1,122 @@
-import { elementFactory } from "./elementFactory"
+import { elementFactory } from "./elementFactory";
 import { projectManager } from "./projectManager";
 
 export function taskFormFactory() {
-    const container = elementFactory(
-        "div",
-        "",
-        { 
-            class: "task-add__form-container",
-            id: ""
-        }
-    );
-    
-    const form = elementFactory(
-        "form",
-        "",
-        { 
-            class: "task-add__form", 
-            id:"task-add-form" 
-        }
-    );
+  const container = elementFactory("div", "", {
+    class: "task-add__form-container",
+    id: "",
+  });
 
-    const spanContainer = elementFactory(
-        "div",
-        "",
-        {
-            class: "spanContainer"
-        }
-    )
+  const form = elementFactory("form", "", {
+    class: "task-add__form",
+    id: "task-add-form",
+  });
 
-    const spanDate = elementFactory(
-        "span",
-        "",
-        {
-            id: "task-date-span",
-            "date-value": ""
-        }
-    )
-    const spanPriority = elementFactory(
-        "span",
-        "", 
-        {
-            id: "task-priority-span",
-            "priority-value": ""
-        }
-    )
+  const spanContainer = elementFactory("div", "", {
+    class: "spanContainer",
+  });
 
-    const labelName = elementFactory(
-        "label",
-        "",
-        { 
-            for: "task-name-input" 
-        }
-    );
+  const spanDate = elementFactory("span", "", {
+    id: "task-date-span",
+    "date-value": "",
+  });
+  const spanPriority = elementFactory("span", "", {
+    id: "task-priority-span",
+    "priority-value": "",
+  });
 
-    const inputName = elementFactory(
-        "input",
-        "",
-        { 
-            type: "text", 
-            name: "taskName",
-            id: "task-name-input",
-            class: "task-add__input task-add__input--name",
-            placeholder: "Task Name"
-        }
-    ); 
+  const labelName = elementFactory("label", "", {
+    for: "task-name-input",
+  });
 
-    const labelDescription = elementFactory(
-        "label",
-        "",
-        { 
-            for: "task-description-input" 
-        }
-    );
+  const inputName = elementFactory("input", "", {
+    type: "text",
+    name: "taskName",
+    id: "task-name-input",
+    class: "task-add__input task-add__input--name",
+    placeholder: "Task Name",
+  });
 
-    const inputDescription = elementFactory(
-        "input",
-        "",
-        { 
-            type: "text", 
-            name: "taskDescription",
-            id: "task-description-input",
-            class: "task-add__input task-add__input--description",
-            /* Writer function to select from a basket random task Description */
-            placeholder: "Enter Your Task Description"
-        }
-    ); 
+  const labelDescription = elementFactory("label", "", {
+    for: "task-description-input",
+  });
 
-    const dateButton = elementFactory(
-        "button",
-        "Date",
-        {
-            id: "displayDateContainerButton",
-            type: "button"
-        }
-    );
+  const inputDescription = elementFactory("input", "", {
+    type: "text",
+    name: "taskDescription",
+    id: "task-description-input",
+    class: "task-add__input task-add__input--description",
+    /* Writer function to select from a basket random task Description */
+    placeholder: "Enter Your Task Description",
+  });
 
-    const priorityButton = elementFactory(
-        "button",
-        "Priority",
-        {
-            id: "priorityButton",
-            type: "button"
-        }
-    )
+  const dateButton = elementFactory("button", "Date", {
+    id: "displayDateContainerButton",
+    type: "button",
+  });
 
-    const labelSelect = elementFactory(
-        "label",
-        "",
-        {
-            for: "task-add__project-select"
-        }
-    );
+  const priorityButton = elementFactory("button", "Priority", {
+    id: "priorityButton",
+    type: "button",
+  });
 
-    const selectProject = elementFactory(
-        "select",
-        "",
-        {
-            id: "task-add__project-select",
-            class: "task-add__select",
-            name: "taskProject"
-        }
-    )
+  const labelSelect = elementFactory("label", "", {
+    for: "task-add__project-select",
+  });
 
-    const optionInbox = elementFactory(
-        "option",
-        "Inbox",
-        {
-            value: "inbox",
-            selected: "selected"
-        }
-    )
-    
-    projectManager.displayProjectList().forEach(project => {
-        const optionUserProject = elementFactory(
-            "option",
-            project.name,
-            {
-              value: project.id
-            }
-        )
-        selectProject.append(optionUserProject)
-    })
-    
-    const formControlls = elementFactory(
-        "div",
-        "",
-        {
-            class: "task-add__controlls"
-        }
-    )
+  const selectProject = elementFactory("select", "", {
+    id: "task-add__project-select",
+    class: "task-add__select",
+    name: "taskProject",
+  });
 
-    const buttonCancel = elementFactory(
-        "button",
-        "Cancel",
-        {
-            class: "task-add__cancel",
-            type: "button"
-        }
-    )
+  const optionInbox = elementFactory("option", "Inbox", {
+    value: "inbox",
+    selected: "selected",
+  });
 
-    const buttonSubmit = elementFactory(
-        "button",
-        "Add Task",
-        {
-            class: "task-add__submit",
-            type: "submit"
-        }
-    )
-    
+  projectManager.displayProjectList().forEach((project) => {
+    const optionUserProject = elementFactory("option", project.name, {
+      value: project.id,
+    });
+    selectProject.append(optionUserProject);
+  });
 
-    labelName.append(inputName)
-    spanContainer.append(spanDate, spanPriority)
+  const formControlls = elementFactory("div", "", {
+    class: "task-add__controlls",
+  });
 
-    labelDescription.append(inputDescription)
+  const buttonCancel = elementFactory("button", "Cancel", {
+    class: "task-add__cancel",
+    type: "button",
+  });
 
-    selectProject.append(optionInbox)
+  const buttonSubmit = elementFactory("button", "Add Task", {
+    class: "task-add__submit",
+    type: "submit",
+  });
 
-    labelSelect.append(selectProject)
-    
+  labelName.append(inputName);
+  spanContainer.append(spanDate, spanPriority);
 
-    form.append(spanContainer, labelName,labelDescription, dateButton, priorityButton, labelSelect)
+  labelDescription.append(inputDescription);
 
-    formControlls.append(buttonCancel, buttonSubmit)
+  selectProject.append(optionInbox);
 
+  labelSelect.append(selectProject);
 
-    container.append(form, formControlls)
+  form.append(
+    spanContainer,
+    labelName,
+    labelDescription,
+    dateButton,
+    priorityButton,
+    labelSelect,
+  );
 
-    return container
+  formControlls.append(buttonCancel, buttonSubmit);
 
+  container.append(form, formControlls);
+
+  return container;
 }

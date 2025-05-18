@@ -1,20 +1,22 @@
 :root {
   --main-black: #000000;
-  --main-gray-strong: #A8A8A8;
-  --main-gray-light: #F4F4F4;
-  --main-white: #FAFAFA;
-  --main-white-warm: #FCFAF8;
-  --main-yellow: #ACB8A8;
-  --main-red: #DC4C3E;
-  --main-peach: #FFEFE5;
+  --main-gray-strong: #a8a8a8;
+  --main-gray-light: #f4f4f4;
+  --main-white: #fafafa;
+  --main-white-warm: #fcfaf8;
+  --main-yellow: #acb8a8;
+  --main-red: #dc4c3e;
+  --main-peach: #ffefe5;
 }
 
-*, *::after, *::before {
-    box-sizing: border-box;
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
 }
 
 * {
-    margin: 0
+  margin: 0;
 }
 
 html {
@@ -22,37 +24,54 @@ html {
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    color: var(--main-black);
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-
+  font-family: "Inter", sans-serif;
+  color: var(--main-black);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
-img, picture, video, canvas, svg {
-    display: block;
-    max-width: 100%;
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
 }
 
-input, button textarea, select {
-    font: inherit;
+input,
+button textarea,
+select {
+  font: inherit;
 }
 
-p, h1 ,h2, h3, h4, h5, h6 {
-    overflow-wrap: break-word;
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
 }
 
 p {
-    text-wrap: pretty;
+  text-wrap: pretty;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    text-wrap: balance;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
 }
 
-#root, #__next {
-    isolation: isolate;
-  }
+#root,
+#__next {
+  isolation: isolate;
+}
 
 .hide {
   display: none !important;
@@ -70,7 +89,8 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
 }
 
-.sidebar__control, .sidebar__project {
+.sidebar__control,
+.sidebar__project {
   padding: 1.5rem;
   appearance: none;
   background-color: inherit;
@@ -78,17 +98,16 @@ h1, h2, h3, h4, h5, h6 {
   font-size: inherit;
 }
 
-
 .sidebar__control--add-task {
   color: var(--main-red);
   font-weight: bold;
 }
 
-.sidebar__control:hover, .sidebar__project:hover  {
+.sidebar__control:hover,
+.sidebar__project:hover {
   border-radius: 0.5rem;
   background-color: var(--main-gray-strong);
   cursor: pointer;
-
 }
 
 .sidebar__projects--create-project-button {
@@ -106,8 +125,7 @@ h1, h2, h3, h4, h5, h6 {
   display: grid;
   grid-template-columns: 320px 1fr 1fr 1fr;
   grid-template-rows: auto;
-  grid-template-areas:
-  "sidebar content content content";
+  grid-template-areas: "sidebar content content content";
 }
 
 .header__project-name {
@@ -118,7 +136,6 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--main-black);
   border-width: 1px 0px 1px 0px;
 }
-
 
 .task-add__form-container {
   margin: auto;
@@ -136,12 +153,12 @@ h1, h2, h3, h4, h5, h6 {
   height: 80%;
   flex-direction: column;
   justify-content: space-evenly;
-  
 }
 .task-add__input {
   border: 0;
 }
-.task-add__input--name, .task-add__input--description {
+.task-add__input--name,
+.task-add__input--description {
   width: 100%;
 }
 
@@ -225,16 +242,14 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--main-gray-strong);
 }
 
-
 #floating-task-add-container {
   background-color: yellow;
   z-index: 999;
   position: fixed;
   top: 10%;
   left: 25%;
-  transform: translate(-50%, -  50%);
+  transform: translate(-50%, -50%);
 }
-
 
 .sidebar__control--inbox-page {
   text-decoration: none;
@@ -298,11 +313,10 @@ h1, h2, h3, h4, h5, h6 {
   gap: 1rem;
 }
 
-.projectForm  {
+.projectForm {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  
 }
 .projectForm > *:not(:first-of-type) {
   width: fit-content;
