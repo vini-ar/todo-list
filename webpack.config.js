@@ -1,34 +1,58 @@
-// webpack.config.js
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+const entry = {
+  inbox: "./src/pages/inbox.js",
+  projects: "./src/pages/projects.js",
+};
+
 module.exports = {
+  entry,
   mode: "development",
-  entry: {
-    inbox: "./src/pages/inbox.js",
-    projects: "./src/pages/projects.js" 
-  },
   output: {
-    filename: '[name].[contenthash].js',
+    filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
+    chunkFilename: "[name].[contenthash].chunk.js",
   },
-  devtool: "eval-source-map",
   devServer: {
-    watchFiles: ["./src/templates/**/inbox.html"],
+    static: {
+      directory: path.resolve(__dirname, "dist"),
+    },
+    watchFiles: ["./src/templates/**/*.html"],
+    historyApiFallback: {
+      rewrites: [{ from: /^\/$/, to: "/inbox.html" }],
+    },
+    open: "/inbox.html",
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: "inbox.html",
-      template: "./src/templates/inbox.html",
-      chunks: ['inbox']
+      template: 'src/templates/inbox.html',
+      filename: 'inbox.html',
+      chunks: ['runtime', 'vendor', 'inbox'],
     }),
     new HtmlWebpackPlugin({
+      template: 'src/templates/projects.html',
       filename: 'projects.html',
-      template: "./src/templates/projects.html",
-      chunks: ['projects']
+      chunks: ['runtime', 'vendor', 'projects'],
     }),
   ],
+  optimization: {
+    usedExports: true,
+    runtimeChunk: {
+      name: "runtime",
+    },
+    splitChunks: {
+      chunks: "all",
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendor",
+          chunks: "all",
+        },
+      },
+    },
+  },
   module: {
     rules: [
       {

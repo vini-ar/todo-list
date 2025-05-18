@@ -1,9 +1,7 @@
 import '../styles/styles.css'
 import { addProject, getColors, getUserProjecstLength, getUserProjectsList, projectManager, projectObjectFactory } from '../components/projectManager'
 import { elementFactory } from '../components/elementFactory'
-import { renderAddProjectForm, renderProjectForm, renderSidebar, renderSidebarAddTaskFormContainer, renderTaskPage } from '../components/renderElements'
-import { add } from 'date-fns'
-import { attachProjectFormActionListeners, attachProjectPageEventListener } from '../components/projectAttachEventListener'
+import { renderAddProjectForm, renderProjectForm, renderSidebarAddTaskFormContainer, renderTaskPage } from '../components/renderElements'
 import { taskManager } from '../components/taskManager'
 import { handleProjectFormCancelButtonClick, handleProjectFormSubmitButtonClick } from '../components/projectFormHandleActions'
 import { renderTask } from '../components/renderTask'
@@ -11,6 +9,9 @@ import { renderTask } from '../components/renderTask'
 
 export function displayProjectCounter() {
     const projectSpanCount = document.querySelector(".project__counter-span")
+    if (!projectSpanCount) {
+        return
+    }   
     let counter = projectManager.getProjectLength()
 
     if (counter === 0 || counter === 1) {
@@ -21,10 +22,8 @@ export function displayProjectCounter() {
     }
 }
 
-
-const manageProjectUI = {
+export const manageProjectUI = {
     start() {
-        renderSidebar()
         displayProjectCounter()
         this.loadUserProjects()
         this.getDOM()
@@ -47,19 +46,19 @@ const manageProjectUI = {
         //attach eventListener for Each project attachEventListnerProjectItem()
     },
     attachProjectPageEventListener() {
-        this.contentAddProjectButton.addEventListener("click", () => {
+        this.contentAddProjectButton?.addEventListener("click", () => {
             if (!document?.querySelector("#newProjectForm")) {
                 const createProjectForm = renderAddProjectForm()
                 this.projectList.append(createProjectForm)
                 this.attachCreateFormEventListener(createProjectForm)
             }  
         })
-        this.sidebarAddProjectButton.addEventListener("click", () => {
+        this.sidebarAddProjectButton?.addEventListener("click", () => {
             const createProjectForm = renderAddProjectForm()
             this.sidebarProjects.append(createProjectForm)
             this.attachCreateFormEventListener(createProjectForm)
         })
-        this.sidebarAddTaskButton.addEventListener("click", (e) => renderSidebarAddTaskFormContainer(e.target))
+        this.sidebarAddTaskButton?.addEventListener("click", (e) => renderSidebarAddTaskFormContainer(e.target))
     },
     attachCreateFormEventListener(createProjectForm) {
         this.cancelProjectFormButton = createProjectForm.querySelector(".projectFormCancelButton")
@@ -74,7 +73,7 @@ const manageProjectUI = {
         })
     },
     attachProjectItemEventListener(projectItem) {
-        projectItem.addEventListener("click", () => {
+        projectItem?.addEventListener("click", () => {
             const targetProjectId = projectItem.getAttribute("data-id")
             this.content.innerHTML = ""
             this.renderProjectPage(targetProjectId)
@@ -100,6 +99,5 @@ const manageProjectUI = {
         })
     }
 }
-
 
 manageProjectUI.start()
